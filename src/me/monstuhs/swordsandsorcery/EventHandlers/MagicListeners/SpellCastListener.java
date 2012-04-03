@@ -33,31 +33,4 @@ public class SpellCastListener implements Listener {
             }
         }
     }
-    
-    public class RegeneratingPlayer {
-        
-        private Player target;
-        private int regenAmount;
-        private int remainingTicks;
-        private String healMessage;
-        public Boolean removeMe;
-        
-        public RegeneratingPlayer(Player regenTarget, int strenghInHalfHearts, int initialTicks, String message) {
-            target = regenTarget;
-            regenAmount = strenghInHalfHearts;
-            remainingTicks = initialTicks;
-            healMessage = message;
-            removeMe = false;
-        }
-        
-        public void Regen() {
-            int currentHealth = target.getHealth();
-            target.sendMessage(healMessage);
-            target.setHealth(Math.min(target.getMaxHealth(), currentHealth + regenAmount));
-            remainingTicks--;
-            if (remainingTicks <= 0) {
-                removeMe = true;
-            }
-        }
-    }
 }
