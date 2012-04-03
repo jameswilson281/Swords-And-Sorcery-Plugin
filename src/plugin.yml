@@ -1,0 +1,5 @@
+name: Swords And Sorcery
+version: 0.0.1
+main: me.monstuhs.swordsandsorcery.SwordsAndSorcery
+description: Combat and Magic enhancements to minecraft.
+author: monstuhs
