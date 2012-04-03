@@ -7,7 +7,9 @@ package me.monstuhs.swordsandsorcery.Managers;
 import java.util.HashMap;
 import me.monstuhs.swordsandsorcery.Models.SaSPlayerData;
 import me.monstuhs.swordsandsorcery.Models.SaSPlayerSkills;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 /**
  *
@@ -35,17 +37,8 @@ public class PlayerManager {
     }
 
     public static void BurnMana(Player caster, int amountToExpend, Boolean manaBurn){
-        SaSPlayerData data = _SaSPlayerData.get(caster);
-        int currentMana = data.ManaPool;
-        int newMana = currentMana - amountToExpend;
-        if(newMana < 0 && manaBurn){
-            caster.damage(-1*newMana);            
-        }
-        _SaSPlayerData.put(caster, data);
-    }
-    
-    public static Boolean PlayerHasMana(Player caster){
-        return _SaSPlayerData.get(caster).ManaPool > 0;
+        HashMap<Integer, ? extends ItemStack> mana = caster.getInventory().all(Material.REDSTONE_ORE);
+        caster.sendMessage("You burned " + amountToExpend + " mana point.");
     }
     
     public static void RegenManaNaturally(){

@@ -33,30 +33,27 @@ public class SpellManager {
     public static void HandleSpellCasting(Player caster, SpellName spellBeingCast) {
 
         Spell spell = GetSpellByName(spellBeingCast);
-        
-        if (ExpendMana(caster, spell)) {
-            switch (spellBeingCast) {
-                case FIREBALL:
-                    DestructionSpellsManager.ShootFireball(caster);
-                    break;
-                case LIGHTNING:
-                    DestructionSpellsManager.ShootLightningBalt(caster, spell.Range);
-                    break;
-                case KNOCKBACK:
-                    DestructionSpellsManager.Knockback(caster);
-                    break;
-                case HEAL:
-                    Entity target = SaSUtilities.GetTargetedEntity(caster, spell.Range);
-                    if (target != null) {
-                        if (target instanceof LivingEntity) {
-                            HealingSpellsManager.HealTarget(caster, (LivingEntity) target);
-                        }
+        ExpendMana(caster, spell);
+
+        switch (spellBeingCast) {
+            case FIREBALL:
+                DestructionSpellsManager.ShootFireball(caster);
+                break;
+            case LIGHTNING:
+                DestructionSpellsManager.ShootLightningBalt(caster, spell.Range);
+                break;
+            case KNOCKBACK:
+                DestructionSpellsManager.Knockback(caster);
+                break;
+            case HEAL:
+                Entity target = SaSUtilities.GetTargetedEntity(caster, spell.Range);
+                if (target != null) {
+                    if (target instanceof LivingEntity) {
+                        HealingSpellsManager.HealTarget(caster, (LivingEntity) target);
                     }
-                default:
-                    break;
-            }
-        } else {
-            caster.sendMessage("You do not have enough mana to cast " + spellBeingCast.toString());
+                }
+            default:
+                break;
         }
     }
 
@@ -70,7 +67,7 @@ public class SpellManager {
 
         switch (activeSpell) {
             case FIREBALL:
-                activeSpell = SpellName.FIREBALL;
+                activeSpell = SpellName.LIGHTNING;
                 break;
             case LIGHTNING:
                 activeSpell = SpellName.KNOCKBACK;
@@ -88,13 +85,8 @@ public class SpellManager {
         caster.sendMessage("You are now casting " + activeSpell.toString());
     }
 
-    private static Boolean ExpendMana(Player caster, Spell spellCast) {
-        Boolean canCast = false;
-        if (PlayerManager.PlayerHasMana(caster)) {
-            canCast = true;
-            PlayerManager.BurnMana(caster, spellCast.ManaCost, Boolean.TRUE);
-        }
-        return canCast;
+    private static void ExpendMana(Player caster, Spell spellCast) {
+        PlayerManager.BurnMana(caster, spellCast.ManaCost, Boolean.TRUE);
     }
 
     private static Spell GetSpellByName(SpellName name) {
@@ -119,15 +111,3 @@ public class SpellManager {
         return thisSpell;
     }
 }
-
-
-
-    
-
-    
-
-
-
-
-
-
