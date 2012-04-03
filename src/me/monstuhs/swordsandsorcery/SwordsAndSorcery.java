@@ -1,12 +1,11 @@
-/*test*/
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
 package me.monstuhs.swordsandsorcery;
 
-import me.monstuhs.swordsandsorcery.EventHandlers.SaSMagicListener;
-import me.monstuhs.swordsandsorcery.EventHandlers.SaSCombatArrowListener;
+import me.monstuhs.swordsandsorcery.EventHandlers.CombatListeners.ArrowListeners;
+import me.monstuhs.swordsandsorcery.EventHandlers.MagicListeners.SpellCastListener;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -23,8 +22,8 @@ public class SwordsAndSorcery extends JavaPlugin {
     public void onEnable() {        
         createorloadconfig();
         
-        _manager.registerEvents(new SaSCombatArrowListener(), this);
-        _manager.registerEvents(new SaSMagicListener(), this);        
+        _manager.registerEvents(new ArrowListeners(), this);
+        _manager.registerEvents(new SpellCastListener(), this);        
     }
 
     @Override

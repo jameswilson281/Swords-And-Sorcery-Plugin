@@ -4,6 +4,8 @@
  */
 package me.monstuhs.swordsandsorcery.Models.Spells;
 
+import me.monstuhs.swordsandsorcery.Models.Spells.Base.Spell;
+
 /**
  *
  * @author James

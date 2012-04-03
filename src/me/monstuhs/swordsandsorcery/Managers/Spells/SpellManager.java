@@ -6,8 +6,12 @@ package me.monstuhs.swordsandsorcery.Managers.Spells;
 
 import java.util.HashMap;
 import me.monstuhs.swordsandsorcery.Managers.PlayerManager;
-import me.monstuhs.swordsandsorcery.Models.Spells.*;
-import me.monstuhs.swordsandsorcery.Models.Spells.Spell.SpellName;
+import me.monstuhs.swordsandsorcery.Models.Spells.Base.Spell;
+import me.monstuhs.swordsandsorcery.Models.Spells.Base.Spell.SpellName;
+import me.monstuhs.swordsandsorcery.Models.Spells.Fireball;
+import me.monstuhs.swordsandsorcery.Models.Spells.Heal;
+import me.monstuhs.swordsandsorcery.Models.Spells.Knockback;
+import me.monstuhs.swordsandsorcery.Models.Spells.Lightning;
 import me.monstuhs.swordsandsorcery.SaSUtilities;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -39,7 +43,7 @@ public class SpellManager {
                     DestructionSpellsManager.ShootLightningBalt(caster, spell.Range);
                     break;
                 case KNOCKBACK:
-                    DestructionSpellsManager.ShootWind(caster);
+                    DestructionSpellsManager.Knockback(caster);
                     break;
                 case HEAL:
                     Entity target = SaSUtilities.GetTargetedEntity(caster, spell.Range);

@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package me.monstuhs.swordsandsorcery.EventHandlers;
+package me.monstuhs.swordsandsorcery.EventHandlers.MagicListeners;
 
 import me.monstuhs.swordsandsorcery.Managers.Spells.SpellManager;
 import org.bukkit.Material;
@@ -17,7 +17,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
  *
  * @author James
  */
-public class SaSMagicListener implements Listener {
+public class SpellCastListener implements Listener {
 
     //TODO: Make this configurable
     Material magicWand = Material.STICK;

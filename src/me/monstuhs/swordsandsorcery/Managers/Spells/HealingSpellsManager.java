@@ -4,7 +4,7 @@
  */
 package me.monstuhs.swordsandsorcery.Managers.Spells;
 
-import me.monstuhs.swordsandsorcery.Models.Spells.Spell.SpellName;
+import me.monstuhs.swordsandsorcery.Models.Spells.Base.Spell.SpellName;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 

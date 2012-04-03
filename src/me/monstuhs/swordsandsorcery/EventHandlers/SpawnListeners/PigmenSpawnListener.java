@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package me.monstuhs.swordsandsorcery.EventHandlers;
+package me.monstuhs.swordsandsorcery.EventHandlers.SpawnListeners;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -19,7 +19,7 @@ import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
  *
  * @author James
  */
-public class SaSNightSpawnListener implements Listener {
+public class PigmenSpawnListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onCreatureSpawn(CreatureSpawnEvent event) {

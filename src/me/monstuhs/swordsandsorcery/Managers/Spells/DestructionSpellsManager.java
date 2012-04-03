@@ -5,11 +5,7 @@
 package me.monstuhs.swordsandsorcery.Managers.Spells;
 
 import java.util.List;
-import me.monstuhs.swordsandsorcery.SaSUtilities;
 import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Fireball;
 import org.bukkit.entity.LivingEntity;
@@ -38,7 +34,7 @@ public class DestructionSpellsManager {
         caster.getWorld().strikeLightningEffect(targetBlockLocation);
     }
 
-    public static void ShootWind(Player caster) {
+    public static void Knockback(Player caster) {
         int areaOfEffect = caster.getLevel() * 3;
         Vector p = caster.getLocation().toVector();
         List<Entity> entities = caster.getNearbyEntities(areaOfEffect, areaOfEffect, areaOfEffect);
