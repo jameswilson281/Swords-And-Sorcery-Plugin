@@ -12,8 +12,7 @@ import me.monstuhs.swordsandsorcery.Models.Spells.Base.Spell;
  */
     public class Knockback extends Spell {
 
-        public Knockback() {
-            Name = SpellName.KNOCKBACK;
-            ManaCost = 1;
+        public Knockback(int manaCost) {
+            super(SpellName.KNOCKBACK, manaCost);
         }
     }

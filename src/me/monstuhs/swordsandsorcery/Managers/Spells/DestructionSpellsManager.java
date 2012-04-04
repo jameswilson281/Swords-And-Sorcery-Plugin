@@ -5,7 +5,9 @@
 package me.monstuhs.swordsandsorcery.Managers.Spells;
 
 import java.util.List;
+import org.bukkit.Effect;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Fireball;
 import org.bukkit.entity.LivingEntity;
@@ -19,7 +21,7 @@ import org.bukkit.util.Vector;
 public class DestructionSpellsManager {
     
     public static void ShootFireball(Player caster) {
-        int velocity = caster.getLevel();
+        int velocity = Math.max(caster.getLevel() / 2, 2);
         float yield = Math.max(caster.getLevel() / 2, 1);
         Vector launchDirection = caster.getLocation().getDirection().multiply(velocity);
         Fireball fireball = caster.getWorld().spawn(caster.getLocation(), Fireball.class);
@@ -29,9 +31,12 @@ public class DestructionSpellsManager {
     }
 
     public static void ShootLightningBalt(Player caster, int range) {
+        float explosionSize = Math.max(caster.getLevel() / 2, 2);
         Location targetBlockLocation = caster.getTargetBlock(null, range).getLocation();
-        caster.getWorld().strikeLightning(targetBlockLocation);
-        caster.getWorld().strikeLightningEffect(targetBlockLocation);
+        World world = caster.getWorld();
+        world.strikeLightning(targetBlockLocation);
+        world.createExplosion(targetBlockLocation, explosionSize, true);
+        world.strikeLightningEffect(targetBlockLocation);
     }
 
     public static void Knockback(Player caster) {
@@ -51,7 +56,7 @@ public class DestructionSpellsManager {
                 }
                 entity.setVelocity(newVector);
             }
-        }
+        }        
     }
 
 //    public static void EarthPit(Player caster) {

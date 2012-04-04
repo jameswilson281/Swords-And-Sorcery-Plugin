@@ -12,8 +12,9 @@ import me.monstuhs.swordsandsorcery.Models.Spells.Base.Spell;
  */
     public class Heal extends Spell {
 
-        public Heal() {
-            Name = SpellName.HEAL;
-            ManaCost = 1;
+        public int Range;
+        public Heal(int manaCost, int range) {
+            super(SpellName.HEAL, manaCost);
+            Range = range;
         }
     }

@@ -12,8 +12,7 @@ import me.monstuhs.swordsandsorcery.Models.Spells.Base.Spell;
  */
 public class Fireball extends Spell {
 
-    public Fireball() {
-        Name = SpellName.FIREBALL;
-        ManaCost = 1;
+    public Fireball(int manaCost) {
+        super(SpellName.FIREBALL, manaCost);
     }
 }

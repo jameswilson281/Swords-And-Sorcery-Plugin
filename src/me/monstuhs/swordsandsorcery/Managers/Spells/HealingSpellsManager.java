@@ -30,6 +30,9 @@ public class HealingSpellsManager {
         }
     }
     
+    public static void CastEndurance(Player caster){        
+    }
+    
     private static int GetHealAmount(Player caster, SpellName healingSpell){
         int healAmount = 0;
         switch(healingSpell){

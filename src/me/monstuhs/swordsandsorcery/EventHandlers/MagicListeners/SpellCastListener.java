@@ -21,11 +21,13 @@ public class SpellCastListener implements Listener {
 
     //TODO: Make this configurable
     Material magicWand = Material.STICK;
-    
+
     @EventHandler(priority = EventPriority.HIGH)
-    public void onRightClick(PlayerInteractEvent event) {        
-        if (event.getMaterial() == magicWand) {
+    public void onRightClick(PlayerInteractEvent event) {
+        if (SpellManager.GetSpellByWand(event.getMaterial()) != null) {
+            
             Player caster = event.getPlayer();
+            
             if (event.getAction() == Action.LEFT_CLICK_AIR) {
                 SpellManager.CycleSpellsForPlayer(event.getPlayer());
             } else if (event.getAction() == Action.RIGHT_CLICK_AIR) {

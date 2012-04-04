@@ -5,8 +5,12 @@
 package me.monstuhs.swordsandsorcery;
 
 import me.monstuhs.swordsandsorcery.EventHandlers.CombatListeners.ArrowListeners;
+import me.monstuhs.swordsandsorcery.EventHandlers.CombatListeners.AttackListeners;
+import me.monstuhs.swordsandsorcery.EventHandlers.CombatListeners.DamageListeners;
 import me.monstuhs.swordsandsorcery.EventHandlers.MagicListeners.SpellCastListener;
+import me.monstuhs.swordsandsorcery.Managers.Spells.SpellManager;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -19,11 +23,14 @@ public class SwordsAndSorcery extends JavaPlugin {
     private static PluginManager _manager = Bukkit.getPluginManager();
 
     @Override
-    public void onEnable() {        
+    public void onEnable() {
         createorloadconfig();
-        
+        SpellManager.InitializeSpellManager(this);
+
         _manager.registerEvents(new ArrowListeners(), this);
-        _manager.registerEvents(new SpellCastListener(), this);        
+        _manager.registerEvents(new AttackListeners(), this);
+        _manager.registerEvents(new DamageListeners(), this);
+        _manager.registerEvents(new SpellCastListener(), this);
     }
 
     @Override
@@ -35,13 +42,21 @@ public class SwordsAndSorcery extends JavaPlugin {
     }
 
     public void createorloadconfig() {
-        WriteMessageToConsole("Creating/loading config");
-        getConfig().addDefault("Pigmen.spawn.spawnindaylight",  true);
-        getConfig().addDefault("Pigmen.spawn.spawninworld",     true);
-        getConfig().addDefault("Pigmen.spawn.spawngroupsize",   5);
-        getConfig().options().copyDefaults(true);
+        WriteMessageToConsole("Creating/loading config");        
+        getConfig().options().copyDefaults(true);        
+
+        getConfig().addDefault(SaSUtilities.SORCERY_DESTRUCTION_MANA_MATERIAL, Material.REDSTONE_ORE.toString());
+        getConfig().addDefault(SaSUtilities.SORCERY_DESTRUCTION_WAND, Material.BLAZE_ROD.toString());
+        getConfig().addDefault(SaSUtilities.SORCERY_DESTRUCTION_SPELLS_FIREBALL_MANACOST, 1);
+        getConfig().addDefault(SaSUtilities.SORCERY_DESTRUCTION_SPELLS_KNOCKBACK_MANACOST, 1);
+        getConfig().addDefault(SaSUtilities.SORCERY_DESCTURCTION_SPELLS_LIGHTING_MANACOST, 1);
+        getConfig().addDefault(SaSUtilities.SORCERY_DESCTURCTION_SPELLS_LIGHTING_RANGE, 50);
+
+        getConfig().addDefault(SaSUtilities.SORCERY_HEALING_MANA_MATERIAL, Material.REDSTONE_ORE.toString());
+        getConfig().addDefault(SaSUtilities.SORCERY_HEALING_WAND, Material.BLAZE_ROD.toString());
+        getConfig().addDefault(SaSUtilities.SORCERY_HEALING_SPELLS_HEAL_MANACOST, 1);
+        getConfig().addDefault(SaSUtilities.SORCERY_HEALING_SPELLS_HEAL_RANGE, 50);
+        
         saveConfig();
     }
-    
-    
 }

@@ -13,9 +13,15 @@ public abstract class Spell {
     public SpellName Name;
     public int ManaCost;
     public int Range;
+    
+    public Spell(SpellName name, int manaCost){
+        Name = name;
+        ManaCost = manaCost;
+    }
 
     public enum SpellName {
 
+        ENDURANCE,
         FIREBALL,
         LIGHTNING,
         KNOCKBACK,

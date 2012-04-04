@@ -10,12 +10,8 @@ import me.monstuhs.swordsandsorcery.Models.Spells.Base.Spell;
  *
  * @author James
  */
-public class Lightning extends Spell {
-
-        public int Range;
-        
-        public Lightning(int manaCost, int range) {
-            super(SpellName.LIGHTNING, manaCost);                        
-            Range = range;
-        }
+public class Endurance extends Spell{
+    public Endurance(int manaCost) {
+        super(SpellName.ENDURANCE, manaCost);
     }
+}

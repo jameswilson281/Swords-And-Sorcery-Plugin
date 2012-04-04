@@ -38,7 +38,7 @@ public class PlayerManager {
 
     public static void BurnMana(Player caster, int amountToExpend, Boolean manaBurn){
         HashMap<Integer, ? extends ItemStack> mana = caster.getInventory().all(Material.REDSTONE_ORE);
-        caster.sendMessage("You burned " + amountToExpend + " mana point.");
+        //caster.sendMessage("You burned " + amountToExpend + " mana point.");
     }
     
     public static void RegenManaNaturally(){
