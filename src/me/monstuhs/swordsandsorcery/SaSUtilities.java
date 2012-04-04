@@ -123,4 +123,6 @@ public class SaSUtilities {
     public static final String SORCERY_HEALING_WAND = "sorcery.healing.wand";            
     public static final String SORCERY_HEALING_SPELLS_HEAL_MANACOST = "sorcery.healing.spells.heal.manacost";
     public static final String SORCERY_HEALING_SPELLS_HEAL_RANGE = "sorcery.healing.spells.heal.range";
+    
+    public static final String SORCERY_ALLOW_MANA_BURN = "sorcery.allowmanaburn";
 }

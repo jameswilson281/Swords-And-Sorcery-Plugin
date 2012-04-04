@@ -2,9 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package me.monstuhs.swordsandsorcery.Models.Spells;
+package me.monstuhs.swordsandsorcery.Models.Spells.Destruction;
 
-import me.monstuhs.swordsandsorcery.Models.Spells.Base.Spell;
+import me.monstuhs.swordsandsorcery.Models.Spells.Spell;
 
 /**
  *

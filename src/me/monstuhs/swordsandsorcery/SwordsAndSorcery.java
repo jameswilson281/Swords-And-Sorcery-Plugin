@@ -57,6 +57,8 @@ public class SwordsAndSorcery extends JavaPlugin {
         getConfig().addDefault(SaSUtilities.SORCERY_HEALING_SPELLS_HEAL_MANACOST, 1);
         getConfig().addDefault(SaSUtilities.SORCERY_HEALING_SPELLS_HEAL_RANGE, 50);
         
+        getConfig().addDefault(SaSUtilities.SORCERY_ALLOW_MANA_BURN, Boolean.TRUE);
+        
         saveConfig();
     }
 }

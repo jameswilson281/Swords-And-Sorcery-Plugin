@@ -2,9 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package me.monstuhs.swordsandsorcery.Managers.Spells;
+package me.monstuhs.swordsandsorcery.Managers.Spells.Healing;
 
-import me.monstuhs.swordsandsorcery.Models.Spells.Base.Spell.SpellName;
+import me.monstuhs.swordsandsorcery.Models.Spells.Spell.SpellName;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
@@ -30,7 +30,8 @@ public class HealingSpellsManager {
         }
     }
     
-    public static void CastEndurance(Player caster){        
+    public static void CastEndurance(Player caster){
+        
     }
     
     private static int GetHealAmount(Player caster, SpellName healingSpell){

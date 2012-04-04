@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package me.monstuhs.swordsandsorcery.Managers.Spells;
+package me.monstuhs.swordsandsorcery.Managers.Spells.Destruction;
 
 import java.util.List;
 import org.bukkit.Effect;

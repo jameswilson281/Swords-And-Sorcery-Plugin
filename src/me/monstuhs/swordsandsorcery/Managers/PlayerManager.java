@@ -5,45 +5,41 @@
 package me.monstuhs.swordsandsorcery.Managers;
 
 import java.util.HashMap;
-import me.monstuhs.swordsandsorcery.Models.SaSPlayerData;
-import me.monstuhs.swordsandsorcery.Models.SaSPlayerSkills;
+import me.monstuhs.swordsandsorcery.Models.Spells.Spell;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 
 /**
  *
  * @author James
  */
 public class PlayerManager {
-    
-    private static HashMap<Player,SaSPlayerData> _SaSPlayerData;
-    
-    public void PlayerManager(HashMap<Player,SaSPlayerData> playerData){
-        _SaSPlayerData = playerData;
-    }    
-    
-    public static void IncreaseSkill(String player, SaSPlayerSkills skill, int amount){
-        if(_SaSPlayerData.containsKey(player)){
-            SaSPlayerData thisPlayersData = _SaSPlayerData.get(player);
-            switch(skill){
-                case MELEE:     thisPlayersData.MeleeLevel      += amount; break;
-                case ARCHERY:   thisPlayersData.ArcheryLevel    += amount; break;
-                case DEFENSE:   thisPlayersData.DefenseLevel    += amount; break;
-                case SORCERY:   thisPlayersData.SorceryLevel    += amount; break;
-                default: break;
+
+    public static Boolean BurnMana(Player caster, Spell spellCast, Boolean manaBurn) {
+
+        int remainingManaNeeded = spellCast.ManaCost;
+        Boolean canCast = true;
+        PlayerInventory inventory = caster.getInventory();
+
+        
+        HashMap<Integer, ItemStack> couldnotRemove =
+                inventory.removeItem(new ItemStack(Material.REDSTONE, remainingManaNeeded));
+        
+        int manaBurnAmount = couldnotRemove.isEmpty() ? 0 : couldnotRemove.get(0).getAmount();
+        if(manaBurnAmount > 0){
+            if(manaBurn){
+                caster.damage(manaBurnAmount);                
+                caster.sendMessage("You burned " + manaBurnAmount + " mana.");
+            }
+            else{
+                canCast = false;
+                caster.sendMessage("You need " + manaBurnAmount + " more mana to cast that");
             }
         }
-    }
+        caster.updateInventory();        
+        return canCast;
 
-    public static void BurnMana(Player caster, int amountToExpend, Boolean manaBurn){
-        HashMap<Integer, ? extends ItemStack> mana = caster.getInventory().all(Material.REDSTONE_ORE);
-        //caster.sendMessage("You burned " + amountToExpend + " mana point.");
-    }
-    
-    public static void RegenManaNaturally(){
-        for(SaSPlayerData data : _SaSPlayerData.values()){            
-            data.ManaPool += data.ManaRegenAmount;
-        }
     }
 }

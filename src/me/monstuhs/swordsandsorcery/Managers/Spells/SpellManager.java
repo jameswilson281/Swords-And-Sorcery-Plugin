@@ -4,15 +4,17 @@
  */
 package me.monstuhs.swordsandsorcery.Managers.Spells;
 
+import me.monstuhs.swordsandsorcery.Managers.Spells.Healing.HealingSpellsManager;
+import me.monstuhs.swordsandsorcery.Managers.Spells.Destruction.DestructionSpellsManager;
 import java.util.EnumMap;
 import java.util.HashMap;
 import me.monstuhs.swordsandsorcery.Managers.PlayerManager;
-import me.monstuhs.swordsandsorcery.Models.Spells.Base.Spell;
-import me.monstuhs.swordsandsorcery.Models.Spells.Base.Spell.SpellName;
-import me.monstuhs.swordsandsorcery.Models.Spells.Fireball;
-import me.monstuhs.swordsandsorcery.Models.Spells.Heal;
-import me.monstuhs.swordsandsorcery.Models.Spells.Knockback;
-import me.monstuhs.swordsandsorcery.Models.Spells.Lightning;
+import me.monstuhs.swordsandsorcery.Models.Spells.Spell;
+import me.monstuhs.swordsandsorcery.Models.Spells.Spell.SpellName;
+import me.monstuhs.swordsandsorcery.Models.Spells.Destruction.Fireball;
+import me.monstuhs.swordsandsorcery.Models.Spells.Healing.Heal;
+import me.monstuhs.swordsandsorcery.Models.Spells.Destruction.Knockback;
+import me.monstuhs.swordsandsorcery.Models.Spells.Destruction.Lightning;
 import me.monstuhs.swordsandsorcery.SaSUtilities;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -30,6 +32,7 @@ public class SpellManager {
     private static EnumMap<SpellName, Spell> Spells = new EnumMap<SpellName, Spell>(SpellName.class);
     private static EnumMap<Material, SpellName> SpellWands = new EnumMap<Material, SpellName>(Material.class);
     private static HashMap<Player, SpellName> ActiveSpellList = new HashMap<Player, SpellName>();
+    private static Boolean burnMana;
 
     public static void InitializeSpellManager(JavaPlugin thisPlugin) {
 
@@ -61,9 +64,15 @@ public class SpellManager {
 
         Material healingWand = Material.getMaterial(config.getString(SaSUtilities.SORCERY_HEALING_WAND));
         SpellWands.put(healingWand, SpellName.HEAL);
+        
+        //Add config settings
+        burnMana = config.getBoolean(SaSUtilities.SORCERY_ALLOW_MANA_BURN);
     }
 
     public static void HandleSpellCasting(Player caster) {
+        if(ActiveSpellList.containsKey(caster) == false){
+            ActiveSpellList.put(caster, SpellName.FIREBALL);
+        }
         SpellName spellToCast = ActiveSpellList.get(caster);
         HandleSpellCasting(caster, spellToCast);
     }
@@ -71,9 +80,9 @@ public class SpellManager {
     public static void HandleSpellCasting(Player caster, SpellName spellBeingCast) {
 
         Spell spell = Spells.get(spellBeingCast);
-        ExpendMana(caster, spell);
-
-        switch (spellBeingCast) {
+        Boolean canCast = ExpendMana(caster, spell);
+        if(canCast){
+            switch (spellBeingCast) {
             case ENDURANCE:
                 HealingSpellsManager.CastEndurance(caster);
                 break;
@@ -96,6 +105,7 @@ public class SpellManager {
             default:
                 break;
         }
+        }        
     }
 
     public static void CycleSpellsForPlayer(Player caster) {
@@ -120,7 +130,7 @@ public class SpellManager {
                 activeSpell = SpellName.HEAL;
                 break;
             case HEAL:
-                activeSpell = SpellName.ENDURANCE;
+                activeSpell = SpellName.ENDURANCE;            
             default:
                 break;
         }
@@ -134,7 +144,7 @@ public class SpellManager {
         return SpellWands.get(wand);
     }
 
-    private static void ExpendMana(Player caster, Spell spellCast) {
-        PlayerManager.BurnMana(caster, spellCast.ManaCost, Boolean.TRUE);
+    private static Boolean ExpendMana(Player caster, Spell spellCast) {
+        return PlayerManager.BurnMana(caster, spellCast, burnMana);        
     }
 }
