@@ -4,7 +4,6 @@
  */
 package me.monstuhs.swordsandsorcery;
 
-import me.monstuhs.swordsandsorcery.EventHandlers.CombatListeners.ArrowListeners;
 import me.monstuhs.swordsandsorcery.EventHandlers.CombatListeners.AttackListeners;
 import me.monstuhs.swordsandsorcery.EventHandlers.CombatListeners.DamageListeners;
 import me.monstuhs.swordsandsorcery.EventHandlers.MagicListeners.SpellCastListener;
@@ -26,8 +25,7 @@ public class SwordsAndSorcery extends JavaPlugin {
     public void onEnable() {
         createorloadconfig();
         SpellManager.InitializeSpellManager(this);
-
-        _manager.registerEvents(new ArrowListeners(), this);
+        
         _manager.registerEvents(new AttackListeners(), this);
         _manager.registerEvents(new DamageListeners(), this);
         _manager.registerEvents(new SpellCastListener(), this);

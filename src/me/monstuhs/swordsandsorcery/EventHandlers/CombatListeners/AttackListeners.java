@@ -4,6 +4,7 @@
  */
 package me.monstuhs.swordsandsorcery.EventHandlers.CombatListeners;
 
+import me.monstuhs.swordsandsorcery.Managers.Combat.CombatManager;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
@@ -30,9 +31,7 @@ public class AttackListeners implements Listener {
             EntityDamageByEntityEvent damageEvent = (EntityDamageByEntityEvent) event;
             //See if it was a melee weapon
             if(damageEvent.getDamager() instanceof Player){
-                Player attacker = (Player) damageEvent.getDamager();
-                int newDamage = damageEvent.getDamage() + Math.max(attacker.getLevel() / 3, 0);
-                damageEvent.setDamage(newDamage);
+                CombatManager.HandleMeleeAttack(damageEvent);
             }
         }
     }
