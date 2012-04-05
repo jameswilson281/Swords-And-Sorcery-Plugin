@@ -35,5 +35,10 @@ public class AttackListeners implements Listener {
             }
         }
     }
+    
+    @EventHandler(priority = EventPriority.NORMAL)
+    public void onChargeAttack(){
+        
+    }
 
 }

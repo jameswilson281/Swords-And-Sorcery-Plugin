@@ -19,7 +19,7 @@ import org.bukkit.util.BlockIterator;
  * @author James
  */
 public class SaSUtilities {
-    
+
     public static List<Block> GetSurroundingBlocks(Block target, boolean includeTarget) {
         List<Block> neighbors = new ArrayList<Block>();
 
@@ -114,15 +114,13 @@ public class SaSUtilities {
     
     public static final String SORCERY_DESTRUCTION_MANA_MATERIAL = "sorcery.destruction.mana.material";
     public static final String SORCERY_DESTRUCTION_WAND = "sorcery.destruction.wand";
-    public static final String SORCERY_DESTRUCTION_SPELLS_FIREBALL_MANACOST = "sorcery.destruction.spells.fireball.manacost";    
+    public static final String SORCERY_DESTRUCTION_SPELLS_FIREBALL_MANACOST = "sorcery.destruction.spells.fireball.manacost";
     public static final String SORCERY_DESTRUCTION_SPELLS_KNOCKBACK_MANACOST = "sorcery.destruction.spells.knockback.manacost";
     public static final String SORCERY_DESCTURCTION_SPELLS_LIGHTING_MANACOST = "sorcery.destruction.spells.lightning.manacost";
     public static final String SORCERY_DESCTURCTION_SPELLS_LIGHTING_RANGE = "sorcery.destruction.spells.lightning.range";
-    
     public static final String SORCERY_HEALING_MANA_MATERIAL = "sorcery.healing.mana.material";
-    public static final String SORCERY_HEALING_WAND = "sorcery.healing.wand";            
+    public static final String SORCERY_HEALING_WAND = "sorcery.healing.wand";
     public static final String SORCERY_HEALING_SPELLS_HEAL_MANACOST = "sorcery.healing.spells.heal.manacost";
     public static final String SORCERY_HEALING_SPELLS_HEAL_RANGE = "sorcery.healing.spells.heal.range";
-    
     public static final String SORCERY_ALLOW_MANA_BURN = "sorcery.allowmanaburn";
 }

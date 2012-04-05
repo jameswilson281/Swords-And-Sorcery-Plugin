@@ -21,7 +21,7 @@ import org.bukkit.util.Vector;
 public class DestructionSpellsManager {
     
     public static void ShootFireball(Player caster) {
-        int velocity = Math.max(caster.getLevel() / 2, 2);
+        int velocity = Math.max(caster.getLevel() / 2, 3);
         float yield = Math.max(caster.getLevel() / 2, 1);
         Vector launchDirection = caster.getLocation().getDirection().multiply(velocity);
         Fireball fireball = caster.getWorld().spawn(caster.getLocation(), Fireball.class);
