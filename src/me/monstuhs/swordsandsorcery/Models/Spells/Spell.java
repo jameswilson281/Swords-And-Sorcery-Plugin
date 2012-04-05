@@ -23,6 +23,7 @@ public abstract class Spell {
         FIREBALL,
         LIGHTNING,
         KNOCKBACK,
-        HEAL
+        HEAL,
+        PIT,
     }
 }

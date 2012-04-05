@@ -121,10 +121,12 @@ public class SaSUtilities {
     public static final String SORCERY_DESTRUCTION_SPELLS_FIREBALL_MANACOST = "sorcery.destruction.spells.fireball.manacost";
     public static final String SORCERY_DESTRUCTION_SPELLS_KNOCKBACK_MANACOST = "sorcery.destruction.spells.knockback.manacost";
     public static final String SORCERY_DESCTURCTION_SPELLS_LIGHTING_MANACOST = "sorcery.destruction.spells.lightning.manacost";
-    public static final String SORCERY_DESCTURCTION_SPELLS_LIGHTING_RANGE = "sorcery.destruction.spells.lightning.range";
+    public static final String SORCERY_DESCTURCTION_SPELLS_LIGHTING_RANGE = "sorcery.destruction.spells.lightning.range";    
+    public static final String SORCERY_DESCTURCTION_SPELLS_PIT_MANACOST = "sorcery.destruction.spells.pit.manacost";
     public static final String SORCERY_HEALING_MANA_MATERIAL = "sorcery.healing.mana.material";
     public static final String SORCERY_HEALING_WAND = "sorcery.healing.wand";
     public static final String SORCERY_HEALING_SPELLS_HEAL_MANACOST = "sorcery.healing.spells.heal.manacost";
     public static final String SORCERY_HEALING_SPELLS_HEAL_RANGE = "sorcery.healing.spells.heal.range";
     public static final String SORCERY_ALLOW_MANA_BURN = "sorcery.allowmanaburn";
+    public static final String SORCERY_HEALING_SPELLS_ENDURANCE_MANACOST = "sorcery.healing.spells.endurance.manacost";
 }
