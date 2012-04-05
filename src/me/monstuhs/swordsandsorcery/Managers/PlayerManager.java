@@ -5,7 +5,7 @@
 package me.monstuhs.swordsandsorcery.Managers;
 
 import java.util.HashMap;
-import me.monstuhs.swordsandsorcery.Models.Spells.Spell;
+import me.monstuhs.swordsandsorcery.Models.Spells.SpellMetaData;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -17,7 +17,7 @@ import org.bukkit.inventory.PlayerInventory;
  */
 public class PlayerManager {
 
-    public static Boolean BurnMana(Player caster, Spell spellCast, Boolean manaBurn) {
+    public static Boolean BurnMana(Player caster, SpellMetaData spellCast, Boolean manaBurn) {
 
         int remainingManaNeeded = spellCast.ManaCost;
         Boolean canCast = true;

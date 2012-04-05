@@ -10,14 +10,12 @@ package me.monstuhs.swordsandsorcery.Models.Spells;
  */
 public abstract class Spell {
 
-    public SpellName Name;
-    public int ManaCost;
-    public int Range;
+    public SpellMetaData SpellData;
     
-    public Spell(SpellName name, int manaCost){
-        Name = name;
-        ManaCost = manaCost;
+    public Spell(SpellMetaData data){
+        SpellData = data;
     }
+    public abstract void Cast();    
 
     public enum SpellName {
 

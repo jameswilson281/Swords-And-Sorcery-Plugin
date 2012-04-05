@@ -7,7 +7,7 @@ package me.monstuhs.swordsandsorcery;
 import me.monstuhs.swordsandsorcery.EventHandlers.CombatListeners.AttackListeners;
 import me.monstuhs.swordsandsorcery.EventHandlers.CombatListeners.DamageListeners;
 import me.monstuhs.swordsandsorcery.EventHandlers.MagicListeners.SpellCastListener;
-import me.monstuhs.swordsandsorcery.Managers.Spells.SpellManager;
+import me.monstuhs.swordsandsorcery.Managers.SpellManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.plugin.PluginManager;

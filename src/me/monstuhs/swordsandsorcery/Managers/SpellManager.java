@@ -2,24 +2,20 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package me.monstuhs.swordsandsorcery.Managers.Spells;
+package me.monstuhs.swordsandsorcery.Managers;
 
-import me.monstuhs.swordsandsorcery.Managers.Spells.Healing.HealingSpellsManager;
-import me.monstuhs.swordsandsorcery.Managers.Spells.Destruction.DestructionSpellsManager;
 import java.util.EnumMap;
 import java.util.HashMap;
-import me.monstuhs.swordsandsorcery.Managers.PlayerManager;
-import me.monstuhs.swordsandsorcery.Models.Spells.Spell;
-import me.monstuhs.swordsandsorcery.Models.Spells.Spell.SpellName;
 import me.monstuhs.swordsandsorcery.Models.Spells.Destruction.Fireball;
-import me.monstuhs.swordsandsorcery.Models.Spells.Healing.Heal;
 import me.monstuhs.swordsandsorcery.Models.Spells.Destruction.Knockback;
 import me.monstuhs.swordsandsorcery.Models.Spells.Destruction.Lightning;
+import me.monstuhs.swordsandsorcery.Models.Spells.Healing.Endurance;
+import me.monstuhs.swordsandsorcery.Models.Spells.Healing.Heal;
+import me.monstuhs.swordsandsorcery.Models.Spells.Spell.SpellName;
+import me.monstuhs.swordsandsorcery.Models.Spells.SpellMetaData;
 import me.monstuhs.swordsandsorcery.SaSUtilities;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -29,7 +25,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class SpellManager {
 
-    private static EnumMap<SpellName, Spell> Spells = new EnumMap<SpellName, Spell>(SpellName.class);
+    private static EnumMap<SpellName, SpellMetaData> Spells = new EnumMap<SpellName, SpellMetaData>(SpellName.class);
     private static EnumMap<Material, SpellName> SpellWands = new EnumMap<Material, SpellName>(Material.class);
     private static HashMap<Player, SpellName> ActiveSpellList = new HashMap<Player, SpellName>();
     private static Boolean burnMana;
@@ -40,23 +36,21 @@ public class SpellManager {
 
         //Add spells
         int fireballCost = config.getInt(SaSUtilities.SORCERY_DESTRUCTION_SPELLS_FIREBALL_MANACOST);
-        Spell fireball = new Fireball(fireballCost);
-        Spells.put(SpellName.FIREBALL, fireball);
+        Spells.put(SpellName.FIREBALL, new SpellMetaData(fireballCost, 0, SpellName.FIREBALL));                
+        
 
         int lightningCost = config.getInt(SaSUtilities.SORCERY_DESCTURCTION_SPELLS_LIGHTING_MANACOST);
         int lightningRange = config.getInt(SaSUtilities.SORCERY_DESCTURCTION_SPELLS_LIGHTING_RANGE);
-        Spell lightning = new Lightning(lightningCost, lightningRange);
-        Spells.put(SpellName.LIGHTNING, lightning);
+        Spells.put(SpellName.LIGHTNING, new SpellMetaData(lightningCost, lightningRange, SpellName.LIGHTNING));
+        
 
-        int knockbackCost = config.getInt(SaSUtilities.SORCERY_DESTRUCTION_SPELLS_KNOCKBACK_MANACOST);
-        Spell knockback = new Knockback(knockbackCost);
-        Spells.put(SpellName.KNOCKBACK, knockback);
-
+        int knockbackCost = config.getInt(SaSUtilities.SORCERY_DESTRUCTION_SPELLS_KNOCKBACK_MANACOST);        
+        Spells.put(SpellName.KNOCKBACK, new SpellMetaData(knockbackCost, 0, SpellName.KNOCKBACK));
+        
         int healCost = config.getInt(SaSUtilities.SORCERY_HEALING_SPELLS_HEAL_MANACOST);
         int healRange = config.getInt(SaSUtilities.SORCERY_HEALING_SPELLS_HEAL_RANGE);
-        Spell heal = new Heal(healCost, healRange);
-        Spells.put(SpellName.HEAL, heal);
-
+        Spells.put(SpellName.HEAL, new SpellMetaData(healCost, healRange, SpellName.HEAL));
+        
 
         //Add wands
         Material destructionWand = Material.getMaterial(config.getString(SaSUtilities.SORCERY_DESTRUCTION_WAND));
@@ -68,6 +62,10 @@ public class SpellManager {
         //Add config settings
         burnMana = config.getBoolean(SaSUtilities.SORCERY_ALLOW_MANA_BURN);
     }
+    
+    public static SpellMetaData GetSpellMetaData(SpellName name){
+        return Spells.get(name);
+    }
 
     public static void HandleSpellCasting(Player caster) {
         if(ActiveSpellList.containsKey(caster) == false){
@@ -78,30 +76,28 @@ public class SpellManager {
     }
 
     public static void HandleSpellCasting(Player caster, SpellName spellBeingCast) {
-
-        Spell spell = Spells.get(spellBeingCast);
-        Boolean canCast = ExpendMana(caster, spell);
+        
+        SpellMetaData thisSpell = Spells.get(spellBeingCast);
+        thisSpell.Caster = caster;
+        Boolean canCast = PlayerManager.BurnMana(caster, thisSpell, burnMana);
+        
         if(canCast){
             switch (spellBeingCast) {
             case ENDURANCE:
-                HealingSpellsManager.CastEndurance(caster);
+                new Endurance(thisSpell).Cast();
                 break;
             case FIREBALL:
-                DestructionSpellsManager.ShootFireball(caster);
+                new Fireball(thisSpell).Cast();
                 break;
             case LIGHTNING:
-                DestructionSpellsManager.ShootLightningBalt(caster, Spells.get(SpellName.LIGHTNING).Range);
+                new Lightning(thisSpell).Cast();                
                 break;
             case KNOCKBACK:
-                DestructionSpellsManager.Knockback(caster);
+                new Knockback(thisSpell).Cast();
                 break;
             case HEAL:
-                Entity target = SaSUtilities.GetTargetedEntity(caster, Spells.get(SpellName.HEAL).Range);
-                if (target != null) {
-                    if (target instanceof LivingEntity) {
-                        HealingSpellsManager.HealTarget(caster, (LivingEntity) target);
-                    }
-                }
+                new Heal(thisSpell).Cast();                
+                break;
             default:
                 break;
         }
@@ -142,9 +138,5 @@ public class SpellManager {
     public static SpellName GetSpellByWand(Material wand) {
         //TODO: Change this to return the spell school
         return SpellWands.get(wand);
-    }
-
-    private static Boolean ExpendMana(Player caster, Spell spellCast) {
-        return PlayerManager.BurnMana(caster, spellCast, burnMana);        
     }
 }

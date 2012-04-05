@@ -5,6 +5,10 @@
 package me.monstuhs.swordsandsorcery.Models.Spells.Destruction;
 
 import me.monstuhs.swordsandsorcery.Models.Spells.Spell;
+import me.monstuhs.swordsandsorcery.Models.Spells.SpellMetaData;
+import org.bukkit.Location;
+import org.bukkit.World;
+import org.bukkit.entity.Player;
 
 /**
  *
@@ -12,10 +16,21 @@ import me.monstuhs.swordsandsorcery.Models.Spells.Spell;
  */
 public class Lightning extends Spell {
 
-        public int Range;
+    public Lightning(SpellMetaData data) {
+        super(data);
+    }
+ 
+    @Override
+    public void Cast() {
+        Player caster = this.SpellData.Caster;
+        int range = this.SpellData.Range;
+        float explosionSize = Math.max(caster.getLevel() / 2, 2);
+        Location targetBlockLocation = caster.getTargetBlock(null, range).getLocation();
+        World world = caster.getWorld();
+        world.strikeLightning(targetBlockLocation);
+        world.createExplosion(targetBlockLocation, explosionSize, true);
+        world.strikeLightningEffect(targetBlockLocation);
+    }
+
         
-        public Lightning(int manaCost, int range) {
-            super(SpellName.LIGHTNING, manaCost);                        
-            Range = range;
-        }
     }

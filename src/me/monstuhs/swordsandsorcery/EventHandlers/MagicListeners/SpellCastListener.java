@@ -4,7 +4,7 @@
  */
 package me.monstuhs.swordsandsorcery.EventHandlers.MagicListeners;
 
-import me.monstuhs.swordsandsorcery.Managers.Spells.SpellManager;
+import me.monstuhs.swordsandsorcery.Managers.SpellManager;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
