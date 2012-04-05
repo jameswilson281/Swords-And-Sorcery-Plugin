@@ -112,6 +112,10 @@ public class SaSUtilities {
         return target;
     }
     
+    public static void WriteMessageToConsole(String message) {
+        System.out.println(message);
+    }
+        
     public static final String SORCERY_DESTRUCTION_MANA_MATERIAL = "sorcery.destruction.mana.material";
     public static final String SORCERY_DESTRUCTION_WAND = "sorcery.destruction.wand";
     public static final String SORCERY_DESTRUCTION_SPELLS_FIREBALL_MANACOST = "sorcery.destruction.spells.fireball.manacost";

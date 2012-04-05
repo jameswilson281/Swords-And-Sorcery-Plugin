@@ -35,12 +35,10 @@ public class SwordsAndSorcery extends JavaPlugin {
     public void onDisable() {
     }
 
-    private void WriteMessageToConsole(String message) {
-        System.out.println(message);
-    }
+
 
     public void createorloadconfig() {
-        WriteMessageToConsole("Creating/loading config");        
+        SaSUtilities.WriteMessageToConsole("Creating/loading config");        
         getConfig().options().copyDefaults(true);        
 
         getConfig().addDefault(SaSUtilities.SORCERY_DESTRUCTION_MANA_MATERIAL, Material.REDSTONE_ORE.toString());
