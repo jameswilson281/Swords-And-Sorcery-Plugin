@@ -2,9 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package me.monstuhs.swordsandsorcery.EventHandlers.MagicListeners;
+package me.monstuhs.swordsandsorcery.EventHandlers.SorceryListeners;
 
-import me.monstuhs.swordsandsorcery.Managers.SpellManager;
+import me.monstuhs.swordsandsorcery.Managers.Sorcery.SpellManager;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

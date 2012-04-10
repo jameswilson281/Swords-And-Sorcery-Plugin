@@ -2,10 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package me.monstuhs.swordsandsorcery.Managers;
+package me.monstuhs.swordsandsorcery.Managers.Sorcery;
 
 import java.util.EnumMap;
 import java.util.HashMap;
+import me.monstuhs.swordsandsorcery.Managers.PlayerManager;
 import me.monstuhs.swordsandsorcery.Models.Spells.Destruction.Fireball;
 import me.monstuhs.swordsandsorcery.Models.Spells.Destruction.Knockback;
 import me.monstuhs.swordsandsorcery.Models.Spells.Destruction.Lightning;
@@ -36,34 +37,34 @@ public class SpellManager {
         FileConfiguration config = thisPlugin.getConfig();
 
         //Add spells
-        int fireballCost = config.getInt(SaSUtilities.SORCERY_DESTRUCTION_SPELLS_FIREBALL_MANACOST);
+        int fireballCost = config.getInt(SaSUtilities.SorceryConstants.SORCERY_DESTRUCTION_SPELLS_FIREBALL_MANACOST);
         Spells.put(SpellName.FIREBALL, new SpellMetaData(fireballCost, 0, SpellName.FIREBALL));
 
 
-        int lightningCost = config.getInt(SaSUtilities.SORCERY_DESCTURCTION_SPELLS_LIGHTING_MANACOST);
-        int lightningRange = config.getInt(SaSUtilities.SORCERY_DESCTURCTION_SPELLS_LIGHTING_RANGE);
+        int lightningCost = config.getInt(SaSUtilities.SorceryConstants.SORCERY_DESCTURCTION_SPELLS_LIGHTING_MANACOST);
+        int lightningRange = config.getInt(SaSUtilities.SorceryConstants.SORCERY_DESCTURCTION_SPELLS_LIGHTING_RANGE);
         Spells.put(SpellName.LIGHTNING, new SpellMetaData(lightningCost, lightningRange, SpellName.LIGHTNING));
 
 
-        int knockbackCost = config.getInt(SaSUtilities.SORCERY_DESTRUCTION_SPELLS_KNOCKBACK_MANACOST);
+        int knockbackCost = config.getInt(SaSUtilities.SorceryConstants.SORCERY_DESTRUCTION_SPELLS_KNOCKBACK_MANACOST);
         Spells.put(SpellName.KNOCKBACK, new SpellMetaData(knockbackCost, 0, SpellName.KNOCKBACK));
 
-        int healCost = config.getInt(SaSUtilities.SORCERY_HEALING_SPELLS_HEAL_MANACOST);
-        int healRange = config.getInt(SaSUtilities.SORCERY_HEALING_SPELLS_HEAL_RANGE);
+        int healCost = config.getInt(SaSUtilities.SorceryConstants.SORCERY_HEALING_SPELLS_HEAL_MANACOST);
+        int healRange = config.getInt(SaSUtilities.SorceryConstants.SORCERY_HEALING_SPELLS_HEAL_RANGE);
         Spells.put(SpellName.HEAL, new SpellMetaData(healCost, healRange, SpellName.HEAL));
 
-        int enduranceCost = config.getInt(SaSUtilities.SORCERY_HEALING_SPELLS_ENDURANCE_MANACOST);
+        int enduranceCost = config.getInt(SaSUtilities.SorceryConstants.SORCERY_HEALING_SPELLS_ENDURANCE_MANACOST);
         Spells.put(SpellName.ENDURANCE, new SpellMetaData(enduranceCost, 0, SpellName.ENDURANCE));
 
         //Add wands
-        Material destructionWand = Material.getMaterial(config.getString(SaSUtilities.SORCERY_DESTRUCTION_WAND));
+        Material destructionWand = Material.getMaterial(config.getString(SaSUtilities.SorceryConstants.SORCERY_DESTRUCTION_WAND));
         SpellWands.put(destructionWand, SpellName.FIREBALL);
 
-        Material healingWand = Material.getMaterial(config.getString(SaSUtilities.SORCERY_HEALING_WAND));
+        Material healingWand = Material.getMaterial(config.getString(SaSUtilities.SorceryConstants.SORCERY_HEALING_WAND));
         SpellWands.put(healingWand, SpellName.HEAL);
 
         //Add config settings
-        burnMana = config.getBoolean(SaSUtilities.SORCERY_ALLOW_MANA_BURN);
+        burnMana = config.getBoolean(SaSUtilities.SorceryConstants.SORCERY_ALLOW_MANA_BURN);
     }
 
     public static void HandleSpellCasting(Player caster) {

@@ -15,7 +15,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 public class CombatManager {
 
     public static void HandleBlocking(Player defender, EntityDamageByEntityEvent event) {
-        Boolean blocked = new Random().nextInt(100) < defender.getLevel();
+        Boolean blocked = new Random().nextInt(100) < defender.getLevel() * 2;
         if (blocked) {
             event.setDamage(event.getDamage() / 2);
         }
