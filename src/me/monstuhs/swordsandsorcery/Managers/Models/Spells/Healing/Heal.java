@@ -2,12 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package me.monstuhs.swordsandsorcery.Models.Spells.Healing;
+package me.monstuhs.swordsandsorcery.Managers.Models.Spells.Healing;
 
 import java.util.List;
-import me.monstuhs.swordsandsorcery.Managers.PlayerManager;
-import me.monstuhs.swordsandsorcery.Models.Spells.Spell;
-import me.monstuhs.swordsandsorcery.Models.Spells.SpellMetaData;
+import me.monstuhs.swordsandsorcery.Managers.Models.Spells.Base.Spell;
+import me.monstuhs.swordsandsorcery.Managers.Models.Spells.SpellMetaData;
+import me.monstuhs.swordsandsorcery.Managers.SpellManager;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
@@ -29,7 +29,7 @@ public class Heal extends Spell {
         for (Entity bro : nearbyPlayers) {
             if (bro instanceof Player) {
                 Player target = (Player) bro;
-                if (PlayerManager.BurnMana(caster, this.SpellData, Boolean.FALSE)) {                    
+                if (SpellManager.BurnMana(caster, this.SpellData, Boolean.FALSE)) {                    
                     int maxHealth = target.getMaxHealth();
                     int currentHealth = target.getHealth();
                     int maxHealAmount = GetHealAmount(caster);

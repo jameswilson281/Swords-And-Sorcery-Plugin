@@ -2,23 +2,24 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package me.monstuhs.swordsandsorcery.Managers.Sorcery;
+package me.monstuhs.swordsandsorcery.Managers;
 
 import java.util.EnumMap;
 import java.util.HashMap;
-import me.monstuhs.swordsandsorcery.Managers.PlayerManager;
-import me.monstuhs.swordsandsorcery.Models.Spells.Destruction.Fireball;
-import me.monstuhs.swordsandsorcery.Models.Spells.Destruction.Knockback;
-import me.monstuhs.swordsandsorcery.Models.Spells.Destruction.Lightning;
-import me.monstuhs.swordsandsorcery.Models.Spells.Destruction.Pit;
-import me.monstuhs.swordsandsorcery.Models.Spells.Healing.Endurance;
-import me.monstuhs.swordsandsorcery.Models.Spells.Healing.Heal;
-import me.monstuhs.swordsandsorcery.Models.Spells.Spell.SpellName;
-import me.monstuhs.swordsandsorcery.Models.Spells.SpellMetaData;
-import me.monstuhs.swordsandsorcery.SaSUtilities;
+import me.monstuhs.swordsandsorcery.Managers.Models.Spells.Destruction.Fireball;
+import me.monstuhs.swordsandsorcery.Managers.Models.Spells.Destruction.Knockback;
+import me.monstuhs.swordsandsorcery.Managers.Models.Spells.Destruction.Lightning;
+import me.monstuhs.swordsandsorcery.Managers.Models.Spells.Destruction.Pit;
+import me.monstuhs.swordsandsorcery.Managers.Models.Spells.Healing.Endurance;
+import me.monstuhs.swordsandsorcery.Managers.Models.Spells.Healing.Heal;
+import me.monstuhs.swordsandsorcery.Managers.Models.Spells.SpellMetaData;
+import me.monstuhs.swordsandsorcery.Managers.Models.Spells.SpellMetaData.SpellName;
+import me.monstuhs.swordsandsorcery.Utilities.ConfigConstants;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -37,34 +38,34 @@ public class SpellManager {
         FileConfiguration config = thisPlugin.getConfig();
 
         //Add spells
-        int fireballCost = config.getInt(SaSUtilities.SorceryConstants.SORCERY_DESTRUCTION_SPELLS_FIREBALL_MANACOST);
+        int fireballCost = config.getInt(ConfigConstants.Sorcery.SORCERY_DESTRUCTION_SPELLS_FIREBALL_MANACOST);
         Spells.put(SpellName.FIREBALL, new SpellMetaData(fireballCost, 0, SpellName.FIREBALL));
 
 
-        int lightningCost = config.getInt(SaSUtilities.SorceryConstants.SORCERY_DESCTURCTION_SPELLS_LIGHTING_MANACOST);
-        int lightningRange = config.getInt(SaSUtilities.SorceryConstants.SORCERY_DESCTURCTION_SPELLS_LIGHTING_RANGE);
+        int lightningCost = config.getInt(ConfigConstants.Sorcery.SORCERY_DESCTURCTION_SPELLS_LIGHTING_MANACOST);
+        int lightningRange = config.getInt(ConfigConstants.Sorcery.SORCERY_DESCTURCTION_SPELLS_LIGHTING_RANGE);
         Spells.put(SpellName.LIGHTNING, new SpellMetaData(lightningCost, lightningRange, SpellName.LIGHTNING));
 
 
-        int knockbackCost = config.getInt(SaSUtilities.SorceryConstants.SORCERY_DESTRUCTION_SPELLS_KNOCKBACK_MANACOST);
+        int knockbackCost = config.getInt(ConfigConstants.Sorcery.SORCERY_DESTRUCTION_SPELLS_KNOCKBACK_MANACOST);
         Spells.put(SpellName.KNOCKBACK, new SpellMetaData(knockbackCost, 0, SpellName.KNOCKBACK));
 
-        int healCost = config.getInt(SaSUtilities.SorceryConstants.SORCERY_HEALING_SPELLS_HEAL_MANACOST);
-        int healRange = config.getInt(SaSUtilities.SorceryConstants.SORCERY_HEALING_SPELLS_HEAL_RANGE);
+        int healCost = config.getInt(ConfigConstants.Sorcery.SORCERY_HEALING_SPELLS_HEAL_MANACOST);
+        int healRange = config.getInt(ConfigConstants.Sorcery.SORCERY_HEALING_SPELLS_HEAL_RANGE);
         Spells.put(SpellName.HEAL, new SpellMetaData(healCost, healRange, SpellName.HEAL));
 
-        int enduranceCost = config.getInt(SaSUtilities.SorceryConstants.SORCERY_HEALING_SPELLS_ENDURANCE_MANACOST);
+        int enduranceCost = config.getInt(ConfigConstants.Sorcery.SORCERY_HEALING_SPELLS_ENDURANCE_MANACOST);
         Spells.put(SpellName.ENDURANCE, new SpellMetaData(enduranceCost, 0, SpellName.ENDURANCE));
 
         //Add wands
-        Material destructionWand = Material.getMaterial(config.getString(SaSUtilities.SorceryConstants.SORCERY_DESTRUCTION_WAND));
+        Material destructionWand = Material.getMaterial(config.getString(ConfigConstants.Sorcery.SORCERY_DESTRUCTION_WAND));
         SpellWands.put(destructionWand, SpellName.FIREBALL);
 
-        Material healingWand = Material.getMaterial(config.getString(SaSUtilities.SorceryConstants.SORCERY_HEALING_WAND));
+        Material healingWand = Material.getMaterial(config.getString(ConfigConstants.Sorcery.SORCERY_HEALING_WAND));
         SpellWands.put(healingWand, SpellName.HEAL);
 
         //Add config settings
-        burnMana = config.getBoolean(SaSUtilities.SorceryConstants.SORCERY_ALLOW_MANA_BURN);
+        burnMana = config.getBoolean(ConfigConstants.Sorcery.SORCERY_ALLOW_MANA_BURN);
     }
 
     public static void HandleSpellCasting(Player caster) {
@@ -80,7 +81,7 @@ public class SpellManager {
         SpellMetaData thisSpell = Spells.get(spellBeingCast);
         if (thisSpell != null) {
             thisSpell.Caster = caster;
-            Boolean canCast = PlayerManager.BurnMana(caster, thisSpell, burnMana);
+            Boolean canCast = SpellManager.BurnMana(caster, thisSpell, burnMana);
 
             if (canCast) {
                 switch (spellBeingCast) {
@@ -100,7 +101,7 @@ public class SpellManager {
                         new Heal(thisSpell).Cast();
                         break;
                     case ENDURANCE:
-                        new Endurance(thisSpell).Cast();
+                        //new Endurance(thisSpell).Cast();
                         break;
                     default:
                         break;
@@ -147,5 +148,31 @@ public class SpellManager {
     public static SpellName GetSpellByWand(Material wand) {
         //TODO: Change this to return the spell school
         return SpellWands.get(wand);
+    }
+    
+    public static Boolean BurnMana(Player caster, SpellMetaData spellCast, Boolean manaBurn) {
+
+        int remainingManaNeeded = spellCast.ManaCost;
+        Boolean canCast = true;
+        PlayerInventory inventory = caster.getInventory();
+
+        
+        HashMap<Integer, ItemStack> couldnotRemove =
+                inventory.removeItem(new ItemStack(Material.REDSTONE, remainingManaNeeded));
+        
+        int manaBurnAmount = couldnotRemove.isEmpty() ? 0 : couldnotRemove.get(0).getAmount();
+        if(manaBurnAmount > 0){
+            if(manaBurn){
+                caster.damage(manaBurnAmount);                
+                caster.sendMessage("You burned " + manaBurnAmount + " mana.");
+            }
+            else{
+                canCast = false;
+                caster.sendMessage("You need " + manaBurnAmount + " more mana to cast that");
+            }
+        }
+        caster.updateInventory();        
+        return canCast;
+
     }
 }

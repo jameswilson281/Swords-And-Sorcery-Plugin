@@ -2,7 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package me.monstuhs.swordsandsorcery.Models.Spells;
+package me.monstuhs.swordsandsorcery.Managers.Models.Spells.Base;
+
+import me.monstuhs.swordsandsorcery.Managers.Models.Spells.SpellMetaData;
 
 /**
  *
@@ -15,15 +17,5 @@ public abstract class Spell {
     public Spell(SpellMetaData data){
         SpellData = data;
     }
-    public abstract void Cast();    
-
-    public enum SpellName {
-
-        ENDURANCE,
-        FIREBALL,
-        LIGHTNING,
-        KNOCKBACK,
-        HEAL,
-        PIT,
-    }
+    public abstract void Cast();
 }

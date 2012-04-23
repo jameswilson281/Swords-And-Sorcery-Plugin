@@ -4,14 +4,16 @@
  */
 package me.monstuhs.swordsandsorcery;
 
-import me.monstuhs.swordsandsorcery.EventHandlers.CombatListeners.AttackListeners;
-import me.monstuhs.swordsandsorcery.EventHandlers.CombatListeners.DamageListeners;
-import me.monstuhs.swordsandsorcery.EventHandlers.SkillsListeners.MiningListeners;
-import me.monstuhs.swordsandsorcery.EventHandlers.SorceryListeners.SpellCastListener;
-import me.monstuhs.swordsandsorcery.Managers.Sorcery.SpellManager;
+import me.monstuhs.swordsandsorcery.Commands.ShowStatsCommand;
+import me.monstuhs.swordsandsorcery.EventHandlers.CombatListeners;
+import me.monstuhs.swordsandsorcery.EventHandlers.MiningListeners;
+import me.monstuhs.swordsandsorcery.EventHandlers.SpellCastListener;
+import me.monstuhs.swordsandsorcery.Managers.*;
+import me.monstuhs.swordsandsorcery.Runnables.RegenerationTask;
+import me.monstuhs.swordsandsorcery.Utilities.BukkitHelpers;
+import me.monstuhs.swordsandsorcery.Utilities.ConfigConstants;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.World;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -19,57 +21,51 @@ import org.bukkit.plugin.java.JavaPlugin;
  *
  * @author James
  */
-public class SwordsAndSorcery extends JavaPlugin {
-
-    private static PluginManager _manager = Bukkit.getPluginManager();
-    private static FileConfiguration _configFile;
-
-    /**
-     * @return the _configFile
-     */
-    public static FileConfiguration getConfigFile() {
-        return _configFile;
-    }
+public class SwordsAndSorcery extends JavaPlugin {    
+    
+    public static ConfigurationManager ConfigManager;
+    public static PlayerLevelManager PlayerLvlManager;
+    public static MiningManager MiningManager;
+    public static CombatManager CombatManager;    
+    private static PluginManager _pluginManager = Bukkit.getPluginManager();
+    private static World _thisWorld;
 
     @Override
     public void onEnable() {
-        _configFile = getConfig();
-        createorloadconfig();
+        ConfigManager = new ConfigurationManager(this);
+        PlayerLvlManager = new PlayerLevelManager(ConfigManager);
+        MiningManager = new MiningManager();
+        CombatManager = new CombatManager();
         SpellManager.InitializeSpellManager(this);
         
-        _manager.registerEvents(new AttackListeners(), this);
-        _manager.registerEvents(new DamageListeners(), this);
-        _manager.registerEvents(new SpellCastListener(), this);
-        _manager.registerEvents(new MiningListeners(), this);
+        String worldName = ConfigManager.getConfigFile().getString(ConfigConstants.GlobalSettings.WORLD_NAME);
+        _thisWorld = worldName.isEmpty() ? Bukkit.getServer().getWorlds().get(0) : Bukkit.getServer().getWorld(worldName);
+        
+        
+        _pluginManager.registerEvents(new MiningListeners(), this);
+        _pluginManager.registerEvents(new CombatListeners(), this);
+        _pluginManager.registerEvents(new SpellCastListener(), this);
+        
+        registerCommands();
+        startRegenTicker();
     }
 
     @Override
     public void onDisable() {
     }
-
-
-
-    public void createorloadconfig() {
-        SaSUtilities.WriteMessageToConsole("Creating/loading config");        
-        _configFile.options().copyDefaults(true);        
-
-        _configFile.addDefault(SaSUtilities.SorceryConstants.SORCERY_DESTRUCTION_MANA_MATERIAL, Material.REDSTONE_ORE.toString());
-        _configFile.addDefault(SaSUtilities.SorceryConstants.SORCERY_DESTRUCTION_WAND, Material.BLAZE_ROD.toString());
-        _configFile.addDefault(SaSUtilities.SorceryConstants.SORCERY_DESTRUCTION_SPELLS_FIREBALL_MANACOST, 1);
-        _configFile.addDefault(SaSUtilities.SorceryConstants.SORCERY_DESTRUCTION_SPELLS_KNOCKBACK_MANACOST, 1);
-        _configFile.addDefault(SaSUtilities.SorceryConstants.SORCERY_DESCTURCTION_SPELLS_LIGHTING_MANACOST, 1);
-        _configFile.addDefault(SaSUtilities.SorceryConstants.SORCERY_DESCTURCTION_SPELLS_LIGHTING_RANGE, 50);
-
-        _configFile.addDefault(SaSUtilities.SorceryConstants.SORCERY_HEALING_MANA_MATERIAL, Material.REDSTONE_ORE.toString());
-        _configFile.addDefault(SaSUtilities.SorceryConstants.SORCERY_HEALING_WAND, Material.BLAZE_ROD.toString());
-        _configFile.addDefault(SaSUtilities.SorceryConstants.SORCERY_HEALING_SPELLS_HEAL_MANACOST, 1);
-        _configFile.addDefault(SaSUtilities.SorceryConstants.SORCERY_HEALING_SPELLS_HEAL_RANGE, 50);
-        
-        _configFile.addDefault(SaSUtilities.SorceryConstants.SORCERY_ALLOW_MANA_BURN, Boolean.TRUE);
-        
-        _configFile.addDefault(SaSUtilities.SkillConstants.SKILL_MINING_PLAYER_LEVEL_BLOCK_DAMAGE_MODIFIER, 0.25);
-        _configFile.addDefault(SaSUtilities.SkillConstants.SKILL_MINING_PLAYER_LEVEL_ORE_DOUBLE_DROP_PERCENTAGE, 0.01);
-        
+    
+    public void saveConfigurationFile(){
         saveConfig();
+    }
+    
+    private void registerCommands(){
+        this.getCommand(ConfigConstants.Commands.COMMANDS_SHOW_STATS).setExecutor(new ShowStatsCommand());
+    }
+    
+    private void startRegenTicker(){
+        long initialDelay = BukkitHelpers.getDelay(10);
+        long repeatDelay = BukkitHelpers.getDelay(ConfigManager.getConfigFile().getLong(ConfigConstants.PassiveActivities.ACTIVITY_PASSIVE_REGEN_DELAY));        
+        double regenRate = PlayerLvlManager.getRegenHalfHeartsPerLevel();
+        this.getServer().getScheduler().scheduleAsyncRepeatingTask(this, new RegenerationTask(_thisWorld, regenRate), initialDelay, repeatDelay);
     }
 }

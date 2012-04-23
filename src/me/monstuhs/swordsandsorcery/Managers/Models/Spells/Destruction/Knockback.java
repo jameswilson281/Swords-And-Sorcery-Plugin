@@ -2,11 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package me.monstuhs.swordsandsorcery.Models.Spells.Destruction;
+package me.monstuhs.swordsandsorcery.Managers.Models.Spells.Destruction;
 
 import java.util.List;
-import me.monstuhs.swordsandsorcery.Models.Spells.Spell;
-import me.monstuhs.swordsandsorcery.Models.Spells.SpellMetaData;
+import me.monstuhs.swordsandsorcery.Managers.Models.Spells.Base.Spell;
+import me.monstuhs.swordsandsorcery.Managers.Models.Spells.SpellMetaData;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;

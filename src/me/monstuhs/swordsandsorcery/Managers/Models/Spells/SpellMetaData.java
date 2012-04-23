@@ -2,9 +2,8 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package me.monstuhs.swordsandsorcery.Models.Spells;
+package me.monstuhs.swordsandsorcery.Managers.Models.Spells;
 
-import me.monstuhs.swordsandsorcery.Models.Spells.Spell.SpellName;
 import org.bukkit.entity.Player;
 
 /**
@@ -21,5 +20,15 @@ public final class SpellMetaData {
         ManaCost = manaCost;
         Range = range;
         Name = spellName;        
+    }
+    
+    public enum SpellName {
+
+        ENDURANCE,
+        FIREBALL,
+        LIGHTNING,
+        KNOCKBACK,
+        HEAL,
+        PIT,
     }
 }

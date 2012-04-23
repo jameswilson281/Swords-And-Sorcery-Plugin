@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package me.monstuhs.swordsandsorcery;
+package me.monstuhs.swordsandsorcery.Utilities;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import org.bukkit.Location;
@@ -18,8 +19,23 @@ import org.bukkit.util.BlockIterator;
  *
  * @author James
  */
-public class SaSUtilities {
-
+public class BukkitHelpers {
+    private static final long TASK_TICKS_PER_SECOND = 20L;    
+    
+    public static long getDelay(long intervalInSeconds){
+        return TASK_TICKS_PER_SECOND * intervalInSeconds;
+    }
+    
+    public static long getSecondsFromTics(long ticks){
+        return ticks/TASK_TICKS_PER_SECOND;
+    }
+    
+    public static String formatDouble(double number){
+        DecimalFormat threeDec = new DecimalFormat("0.000");
+        threeDec.setGroupingUsed(false);
+        return threeDec.format(number);
+    }
+    
     public static List<Block> GetSurroundingBlocks(Block target, boolean includeTarget) {
         List<Block> neighbors = new ArrayList<Block>();
 
@@ -110,32 +126,5 @@ public class SaSUtilities {
 
 
         return target;
-    }
-
-    public static void WriteMessageToConsole(String message) {
-        System.out.println(message);
-    }
-
-    public class SorceryConstants {
-
-        public static final String SORCERY_DESTRUCTION_MANA_MATERIAL = "sorcery.destruction.mana.material";
-        public static final String SORCERY_DESTRUCTION_WAND = "sorcery.destruction.wand";
-        public static final String SORCERY_DESTRUCTION_SPELLS_FIREBALL_MANACOST = "sorcery.destruction.spells.fireball.manacost";
-        public static final String SORCERY_DESTRUCTION_SPELLS_KNOCKBACK_MANACOST = "sorcery.destruction.spells.knockback.manacost";
-        public static final String SORCERY_DESCTURCTION_SPELLS_LIGHTING_MANACOST = "sorcery.destruction.spells.lightning.manacost";
-        public static final String SORCERY_DESCTURCTION_SPELLS_LIGHTING_RANGE = "sorcery.destruction.spells.lightning.range";
-        public static final String SORCERY_DESCTURCTION_SPELLS_PIT_MANACOST = "sorcery.destruction.spells.pit.manacost";
-        public static final String SORCERY_HEALING_MANA_MATERIAL = "sorcery.healing.mana.material";
-        public static final String SORCERY_HEALING_WAND = "sorcery.healing.wand";
-        public static final String SORCERY_HEALING_SPELLS_HEAL_MANACOST = "sorcery.healing.spells.heal.manacost";
-        public static final String SORCERY_HEALING_SPELLS_HEAL_RANGE = "sorcery.healing.spells.heal.range";
-        public static final String SORCERY_ALLOW_MANA_BURN = "sorcery.allowmanaburn";
-        public static final String SORCERY_HEALING_SPELLS_ENDURANCE_MANACOST = "sorcery.healing.spells.endurance.manacost";
-    
-    }
-    
-    public class SkillConstants {
-        public static final String SKILL_MINING_PLAYER_LEVEL_BLOCK_DAMAGE_MODIFIER = "skill.mining.levelblockmodifier";
-        public static final String SKILL_MINING_PLAYER_LEVEL_ORE_DOUBLE_DROP_PERCENTAGE = "skill.mining.doubledroppercentageperlevel";
     }
 }
