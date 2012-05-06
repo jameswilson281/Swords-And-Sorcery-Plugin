@@ -5,6 +5,7 @@
 package me.monstuhs.swordsandsorcery;
 
 import me.monstuhs.swordsandsorcery.Commands.ShowStatsCommand;
+import me.monstuhs.swordsandsorcery.Commands.SpawnCommands;
 import me.monstuhs.swordsandsorcery.EventHandlers.CombatListeners;
 import me.monstuhs.swordsandsorcery.EventHandlers.MiningListeners;
 import me.monstuhs.swordsandsorcery.EventHandlers.SpellCastListener;
@@ -23,28 +24,29 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class SwordsAndSorcery extends JavaPlugin {    
     
-    public static ConfigurationManager ConfigManager;
-    public static PlayerLevelManager PlayerLvlManager;
-    public static MiningManager MiningManager;
-    public static CombatManager CombatManager;    
-    private static PluginManager _pluginManager = Bukkit.getPluginManager();
-    private static World _thisWorld;
+    private ConfigurationManager _configManager;
+    private PlayerLevelManager _playerLvlManager;
+    private MiningManager _miningManager;
+    private CombatManager _combatManager;    
+    private SpellManager _spellManager;
+    private PluginManager _pluginManager = Bukkit.getPluginManager();
+    private World _thisWorld;
 
     @Override
     public void onEnable() {
-        ConfigManager = new ConfigurationManager(this);
-        PlayerLvlManager = new PlayerLevelManager(ConfigManager);
-        MiningManager = new MiningManager();
-        CombatManager = new CombatManager();
-        SpellManager.InitializeSpellManager(this);
+        _configManager = new ConfigurationManager(this);
+        _playerLvlManager = new PlayerLevelManager(_configManager);
+        _miningManager = new MiningManager(_configManager);
+        _combatManager = new CombatManager(_configManager);
+        _spellManager = new SpellManager(_configManager.getConfigFile());
         
-        String worldName = ConfigManager.getConfigFile().getString(ConfigConstants.GlobalSettings.WORLD_NAME);
+        String worldName = _configManager.getConfigFile().getString(ConfigConstants.GlobalSettings.WORLD_NAME);
         _thisWorld = worldName.isEmpty() ? Bukkit.getServer().getWorlds().get(0) : Bukkit.getServer().getWorld(worldName);
         
         
         _pluginManager.registerEvents(new MiningListeners(), this);
         _pluginManager.registerEvents(new CombatListeners(), this);
-        _pluginManager.registerEvents(new SpellCastListener(), this);
+        _pluginManager.registerEvents(new SpellCastListener(_spellManager), this);
         
         registerCommands();
         startRegenTicker();
@@ -59,13 +61,38 @@ public class SwordsAndSorcery extends JavaPlugin {
     }
     
     private void registerCommands(){
-        this.getCommand(ConfigConstants.Commands.COMMANDS_SHOW_STATS).setExecutor(new ShowStatsCommand());
+        this.getCommand(ConfigConstants.Commands.COMMANDS_SHOW_STATS).setExecutor(new ShowStatsCommand(_playerLvlManager));
+        this.getCommand(ConfigConstants.Commands.COMMANDS_SPAWN_DRAGON).setExecutor(new SpawnCommands());
     }
     
     private void startRegenTicker(){
         long initialDelay = BukkitHelpers.getDelay(10);
-        long repeatDelay = BukkitHelpers.getDelay(ConfigManager.getConfigFile().getLong(ConfigConstants.PassiveActivities.ACTIVITY_PASSIVE_REGEN_DELAY));        
-        double regenRate = PlayerLvlManager.getRegenHalfHeartsPerLevel();
+        long repeatDelay = BukkitHelpers.getDelay(_configManager.getConfigFile().getLong(ConfigConstants.PassiveActivities.ACTIVITY_PASSIVE_REGEN_DELAY));        
+        double regenRate = _playerLvlManager.getRegenHalfHeartsPerLevel();
         this.getServer().getScheduler().scheduleAsyncRepeatingTask(this, new RegenerationTask(_thisWorld, regenRate), initialDelay, repeatDelay);
+    }
+
+    public ConfigurationManager getConfigManager() {
+        return _configManager;
+    }
+
+    public void setConfigManager(ConfigurationManager configManager) {
+        this._configManager = configManager;
+    }
+
+    public PlayerLevelManager getPlayerLvlManager() {
+        return _playerLvlManager;
+    }
+
+    public MiningManager getMiningManager() {
+        return _miningManager;
+    }
+
+    public CombatManager getCombatManager() {
+        return _combatManager;
+    }
+
+    public SpellManager getSpellManager() {
+        return _spellManager;
     }
 }

@@ -8,6 +8,12 @@ package me.monstuhs.swordsandsorcery.Managers.Models.Spells.Base;
  *
  * @author James
  */
-public interface RecurringSpell {
-    public abstract void Tick();
+public enum SpellNames {
+
+    ENDURANCE,
+    FIREBALL,    
+    HEAL_AREA,
+    KNOCKBACK,    
+    LIGHTNING,
+    PIT
 }

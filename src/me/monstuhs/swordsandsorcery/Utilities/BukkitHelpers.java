@@ -86,45 +86,5 @@ public class BukkitHelpers {
         return neighbors;
     }
 
-    public static Entity GetTargetedEntity(Player targeter, int range) {
-        BlockIterator lineOfSight = new BlockIterator(targeter, range);
-        List<Entity> nearbyEntities = targeter.getNearbyEntities(range, range, range);
-        Entity target = null;
 
-        Block block;
-        Location loc;
-        int bx, by, bz;
-        double ex, ey, ez;
-
-        while (lineOfSight.hasNext()) {
-            block = lineOfSight.next();
-            bx = block.getX();
-            by = block.getY();
-            bz = block.getZ();
-            // check for entities near this block in the line of sight
-            for (Entity e : nearbyEntities) {
-                loc = e.getLocation();
-                ex = loc.getX();
-                ey = loc.getY();
-                ez = loc.getZ();
-                if ((bx - 1.00 <= ex && ex <= bx + 2.00)
-                        && (bz - 1.00 <= ez && ez <= bz + 2.00)
-                        && (by - 1 <= ey && ey <= by + 2.5)) {
-                    // entity is close enough, set target and stop
-                    target = e;
-                    break;
-                }
-            }
-        }
-
-//        if (target == null) {
-//            System.out.println(" no target");
-//        } else {
-//            System.out.println(targeter.getDisplayName() + " targeted " + target.getType().toString());
-//        }
-
-
-
-        return target;
-    }
 }

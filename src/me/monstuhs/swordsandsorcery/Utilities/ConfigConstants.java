@@ -39,6 +39,7 @@ public class ConfigConstants {
     
     public class Commands {
         public static final String COMMANDS_SHOW_STATS = "stats";
+        public static final String COMMANDS_SPAWN_DRAGON = "dragon";
     }
     
     public class Sorcery {
@@ -47,6 +48,7 @@ public class ConfigConstants {
         public static final String SORCERY_DESTRUCTION_WAND = "sorcery.destruction.wand";
         public static final String SORCERY_DESTRUCTION_SPELLS_FIREBALL_MANACOST = "sorcery.destruction.spells.fireball.manacost";
         public static final String SORCERY_DESTRUCTION_SPELLS_KNOCKBACK_MANACOST = "sorcery.destruction.spells.knockback.manacost";
+        public static final String SORCERY_DESTRUCTION_SPELLS_KNOCKBACK_RANGE_PER_LEVEL = "sorcery.destruction.spells.knockback.rangePerLevel";
         public static final String SORCERY_DESCTURCTION_SPELLS_LIGHTING_MANACOST = "sorcery.destruction.spells.lightning.manacost";
         public static final String SORCERY_DESCTURCTION_SPELLS_LIGHTING_RANGE = "sorcery.destruction.spells.lightning.range";
         public static final String SORCERY_DESCTURCTION_SPELLS_PIT_MANACOST = "sorcery.destruction.spells.pit.manacost";

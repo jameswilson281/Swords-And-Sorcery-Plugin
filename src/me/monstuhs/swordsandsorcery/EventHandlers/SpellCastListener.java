@@ -5,8 +5,8 @@
 package me.monstuhs.swordsandsorcery.EventHandlers;
 
 import me.monstuhs.swordsandsorcery.Managers.SpellManager;
+import me.monstuhs.swordsandsorcery.SwordsAndSorcery;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -19,20 +19,23 @@ import org.bukkit.event.player.PlayerInteractEvent;
  */
 public class SpellCastListener implements Listener {
 
-    //TODO: Make this configurable
-    Material magicWand = Material.STICK;
+    private SpellManager _spellManager;
+    
+    public SpellCastListener(SpellManager spellManager){
+        _spellManager = spellManager;
+    }
+    
+    @EventHandler(priority = EventPriority.NORMAL)
+    public void onCastSpell(PlayerInteractEvent event) {
+        if (event.getMaterial() == Material.BLAZE_ROD && event.getAction() == Action.LEFT_CLICK_AIR) {
+            _spellManager.useWand(event.getPlayer());
+        }
+    }
 
-    @EventHandler(priority = EventPriority.HIGH)
-    public void onRightClick(PlayerInteractEvent event) {
-        if (SpellManager.GetSpellByWand(event.getMaterial()) != null) {
-            
-            Player caster = event.getPlayer();
-            
-            if (event.getAction() == Action.LEFT_CLICK_AIR) {
-                SpellManager.CycleSpellsForPlayer(event.getPlayer());
-            } else if (event.getAction() == Action.RIGHT_CLICK_AIR) {
-                SpellManager.HandleSpellCasting(caster);
-            }
+    @EventHandler(priority = EventPriority.NORMAL)
+    public void onChangeActiveSpell(PlayerInteractEvent event) {
+        if (event.getMaterial() == Material.BLAZE_ROD && event.getAction() == Action.RIGHT_CLICK_AIR) {
+            _spellManager.cycleSpellsForPlayer(event.getPlayer().getName());
         }
     }
 }

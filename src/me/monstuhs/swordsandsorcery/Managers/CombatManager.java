@@ -27,6 +27,7 @@ public class CombatManager {
     private static double _headshotDamageModifier = 1;
     private static int _maxCritChance = 100;
     private static int _maxDodgeChance = 100;
+    private final ConfigurationManager _configManager;
 
     public static int getChanceToDodgePerLevel() {
         return _chanceToDodgePerLevel;
@@ -37,15 +38,16 @@ public class CombatManager {
     }
     
 
-    public CombatManager() {
-        _chanceToDodgePerLevel = SwordsAndSorcery.ConfigManager.getConfigFile().getInt(ConfigConstants.CombatActivities.ACTIVITY_COMBAT_PpL_DODGE);
-        _dodgeDamageModifier = SwordsAndSorcery.ConfigManager.getConfigFile().getDouble(ConfigConstants.GlobalSettings.SETTINGS_COMBAT_DODGE_MODIFIER) / 100;
+    public CombatManager(ConfigurationManager configManager) {
+        _configManager = configManager;
+        _chanceToDodgePerLevel = _configManager.getConfigFile().getInt(ConfigConstants.CombatActivities.ACTIVITY_COMBAT_PpL_DODGE);
+        _dodgeDamageModifier = _configManager.getConfigFile().getDouble(ConfigConstants.GlobalSettings.SETTINGS_COMBAT_DODGE_MODIFIER) / 100;
         
-        _chanceToCritPerLevel = SwordsAndSorcery.ConfigManager.getConfigFile().getInt(ConfigConstants.CombatActivities.ACTIVITY_COMBAT_PpL_CRIT);
-        _critDamageModifier = SwordsAndSorcery.ConfigManager.getConfigFile().getDouble(ConfigConstants.GlobalSettings.SETTINGS_COMBAT_CRIT_MODIFIER) / 100;
-        _headshotDamageModifier = SwordsAndSorcery.ConfigManager.getConfigFile().getDouble(ConfigConstants.GlobalSettings.SETTINGS_COMBAT_HEADSHOT_MODIFIER) / 100;
-        _maxCritChance = SwordsAndSorcery.ConfigManager.getConfigFile().getInt(ConfigConstants.GlobalSettings.SETTINGS_COMBAT_MAX_CRIT_CHANCE);
-        _maxDodgeChance = SwordsAndSorcery.ConfigManager.getConfigFile().getInt(ConfigConstants.GlobalSettings.SETTINGS_COMBAT_MAX_DODGE_CHANCE);
+        _chanceToCritPerLevel = _configManager.getConfigFile().getInt(ConfigConstants.CombatActivities.ACTIVITY_COMBAT_PpL_CRIT);
+        _critDamageModifier = _configManager.getConfigFile().getDouble(ConfigConstants.GlobalSettings.SETTINGS_COMBAT_CRIT_MODIFIER) / 100;
+        _headshotDamageModifier = _configManager.getConfigFile().getDouble(ConfigConstants.GlobalSettings.SETTINGS_COMBAT_HEADSHOT_MODIFIER) / 100;
+        _maxCritChance = _configManager.getConfigFile().getInt(ConfigConstants.GlobalSettings.SETTINGS_COMBAT_MAX_CRIT_CHANCE);
+        _maxDodgeChance = _configManager.getConfigFile().getInt(ConfigConstants.GlobalSettings.SETTINGS_COMBAT_MAX_DODGE_CHANCE);
     }
 
     public static int getDamageAfterDodgeAttempt(Player defender, int originalDamage) {

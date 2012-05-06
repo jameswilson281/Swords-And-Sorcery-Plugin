@@ -3,3 +3,10 @@ version: 0.0.1
 main: me.monstuhs.swordsandsorcery.SwordsAndSorcery
 description: Combat and Magic enhancements to minecraft.
 author: monstuhs
+commands:
+   stats:
+      description: Show your currents stats
+      usage: /<command>
+   dragon:
+      description: Spawn ender dragon
+      usage: /<command>

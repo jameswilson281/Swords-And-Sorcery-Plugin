@@ -5,7 +5,6 @@
 package me.monstuhs.swordsandsorcery.Managers;
 
 import java.util.Random;
-import me.monstuhs.swordsandsorcery.SwordsAndSorcery;
 import me.monstuhs.swordsandsorcery.Utilities.ConfigConstants;
 import org.bukkit.entity.Player;
 
@@ -15,6 +14,7 @@ import org.bukkit.entity.Player;
  */
 public class MiningManager {
     
+    private final ConfigurationManager _configManager;
     private static int _chanceToBreakPerLevel = 0;
     private static int _chanceToDoubleDropPerLevel = 0;
 
@@ -26,9 +26,10 @@ public class MiningManager {
         return _chanceToDoubleDropPerLevel;
     }
     
-    public MiningManager(){        
-        _chanceToBreakPerLevel = SwordsAndSorcery.ConfigManager.getConfigFile().getInt(ConfigConstants.MiningActivities.ACTIVITY_MINING_PpL_INSTABREAK);
-        _chanceToDoubleDropPerLevel = SwordsAndSorcery.ConfigManager.getConfigFile().getInt(ConfigConstants.MiningActivities.ACTIVITY_MINING_PpL_DOUBLE_DROP);
+    public MiningManager(ConfigurationManager configManager){
+        _configManager = configManager;
+        _chanceToBreakPerLevel = _configManager.getConfigFile().getInt(ConfigConstants.MiningActivities.ACTIVITY_MINING_PpL_INSTABREAK);
+        _chanceToDoubleDropPerLevel = _configManager.getConfigFile().getInt(ConfigConstants.MiningActivities.ACTIVITY_MINING_PpL_DOUBLE_DROP);
     }
     
     public static boolean getDoubleDropForPlayer(Player miner){

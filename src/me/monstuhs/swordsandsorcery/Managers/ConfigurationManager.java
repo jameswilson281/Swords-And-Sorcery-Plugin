@@ -5,6 +5,7 @@
 package me.monstuhs.swordsandsorcery.Managers;
 
 import me.monstuhs.swordsandsorcery.Utilities.ConfigConstants;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -24,7 +25,7 @@ public class ConfigurationManager {
         return _configFile;
     }
     
-    public ConfigurationManager(JavaPlugin thisPlugin){
+    public ConfigurationManager(JavaPlugin thisPlugin){        
         _plugin = thisPlugin;
         _configFile = _plugin.getConfig();
         createOrLoadConfig();
@@ -32,6 +33,7 @@ public class ConfigurationManager {
     
     private void createOrLoadConfig() {        
         _configFile.options().copyDefaults(true);
+        
         
         _configFile.addDefault(ConfigConstants.GlobalSettings.WORLD_NAME, _plugin.getServer().getWorlds().get(0).getName());
 
@@ -54,8 +56,10 @@ public class ConfigurationManager {
         _configFile.addDefault(ConfigConstants.Sorcery.SORCERY_DESTRUCTION_WAND, Material.BLAZE_ROD.toString());
         _configFile.addDefault(ConfigConstants.Sorcery.SORCERY_DESTRUCTION_SPELLS_FIREBALL_MANACOST, 1);
         _configFile.addDefault(ConfigConstants.Sorcery.SORCERY_DESTRUCTION_SPELLS_KNOCKBACK_MANACOST, 1);
+        _configFile.addDefault(ConfigConstants.Sorcery.SORCERY_DESTRUCTION_SPELLS_KNOCKBACK_RANGE_PER_LEVEL, 3);
         _configFile.addDefault(ConfigConstants.Sorcery.SORCERY_DESCTURCTION_SPELLS_LIGHTING_MANACOST, 1);
         _configFile.addDefault(ConfigConstants.Sorcery.SORCERY_DESCTURCTION_SPELLS_LIGHTING_RANGE, 50);
+        _configFile.addDefault(ConfigConstants.Sorcery.SORCERY_DESCTURCTION_SPELLS_PIT_MANACOST, 1);
 
         _configFile.addDefault(ConfigConstants.Sorcery.SORCERY_HEALING_MANA_MATERIAL, Material.REDSTONE_ORE.toString());
         _configFile.addDefault(ConfigConstants.Sorcery.SORCERY_HEALING_WAND, Material.BLAZE_ROD.toString());
