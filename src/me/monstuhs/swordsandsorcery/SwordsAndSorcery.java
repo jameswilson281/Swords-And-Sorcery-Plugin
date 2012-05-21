@@ -22,13 +22,14 @@ import org.bukkit.plugin.java.JavaPlugin;
  *
  * @author James
  */
-public class SwordsAndSorcery extends JavaPlugin {    
-    
+public class SwordsAndSorcery extends JavaPlugin {
+
     private ConfigurationManager _configManager;
     private PlayerLevelManager _playerLvlManager;
     private MiningManager _miningManager;
-    private CombatManager _combatManager;    
+    private CombatManager _combatManager;
     private SpellManager _spellManager;
+    private SmithingManager _smithingManager;
     private PluginManager _pluginManager = Bukkit.getPluginManager();
     private World _thisWorld;
 
@@ -39,15 +40,16 @@ public class SwordsAndSorcery extends JavaPlugin {
         _miningManager = new MiningManager(_configManager);
         _combatManager = new CombatManager(_configManager);
         _spellManager = new SpellManager(_configManager.getConfigFile());
+        _smithingManager = new SmithingManager(_configManager);
         
         String worldName = _configManager.getConfigFile().getString(ConfigConstants.GlobalSettings.WORLD_NAME);
         _thisWorld = worldName.isEmpty() ? Bukkit.getServer().getWorlds().get(0) : Bukkit.getServer().getWorld(worldName);
-        
-        
+
+
         _pluginManager.registerEvents(new MiningListeners(), this);
         _pluginManager.registerEvents(new CombatListeners(), this);
         _pluginManager.registerEvents(new SpellCastListener(_spellManager), this);
-        
+
         registerCommands();
         startRegenTicker();
     }
@@ -55,19 +57,19 @@ public class SwordsAndSorcery extends JavaPlugin {
     @Override
     public void onDisable() {
     }
-    
-    public void saveConfigurationFile(){
+
+    public void saveConfigurationFile() {
         saveConfig();
     }
-    
-    private void registerCommands(){
+
+    private void registerCommands() {
         this.getCommand(ConfigConstants.Commands.COMMANDS_SHOW_STATS).setExecutor(new ShowStatsCommand(_playerLvlManager));
         this.getCommand(ConfigConstants.Commands.COMMANDS_SPAWN_DRAGON).setExecutor(new SpawnCommands());
     }
-    
-    private void startRegenTicker(){
+
+    private void startRegenTicker() {
         long initialDelay = BukkitHelpers.getDelay(10);
-        long repeatDelay = BukkitHelpers.getDelay(_configManager.getConfigFile().getLong(ConfigConstants.PassiveActivities.ACTIVITY_PASSIVE_REGEN_DELAY));        
+        long repeatDelay = BukkitHelpers.getDelay(_configManager.getConfigFile().getLong(ConfigConstants.PassiveActivities.ACTIVITY_PASSIVE_REGEN_DELAY));
         double regenRate = _playerLvlManager.getRegenHalfHeartsPerLevel();
         this.getServer().getScheduler().scheduleAsyncRepeatingTask(this, new RegenerationTask(_thisWorld, regenRate), initialDelay, repeatDelay);
     }

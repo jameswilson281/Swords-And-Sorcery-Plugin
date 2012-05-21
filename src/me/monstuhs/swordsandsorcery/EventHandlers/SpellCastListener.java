@@ -5,7 +5,6 @@
 package me.monstuhs.swordsandsorcery.EventHandlers;
 
 import me.monstuhs.swordsandsorcery.Managers.SpellManager;
-import me.monstuhs.swordsandsorcery.SwordsAndSorcery;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

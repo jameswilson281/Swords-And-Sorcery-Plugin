@@ -5,7 +5,7 @@
 package me.monstuhs.swordsandsorcery.EventHandlers;
 
 import me.monstuhs.swordsandsorcery.Managers.MiningManager;
-import me.monstuhs.swordsandsorcery.Utilities.MiningHelpers;
+import me.monstuhs.swordsandsorcery.Utilities.MaterialsHelpers;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
@@ -25,7 +25,7 @@ public class MiningListeners implements Listener {
     public void onBlockDamage(BlockDamageEvent event) {  
         
         //Insta-break check
-        if(MiningHelpers.isOre(event.getBlock().getType()) == false){
+        if(MaterialsHelpers.isOre(event.getBlock().getType()) == false){
             if(MiningManager.getInstaBreakForPlayer(event.getPlayer())){
                 event.setInstaBreak(true);
             }            
@@ -36,9 +36,9 @@ public class MiningListeners implements Listener {
     public void onBlockBreak(BlockBreakEvent event) {
         
         //Double-drop check
-        if(MiningHelpers.isOre(event.getBlock().getType()) && MiningManager.getDoubleDropForPlayer(event.getPlayer())){
+        if(MaterialsHelpers.isOre(event.getBlock().getType()) && MiningManager.getDoubleDropForPlayer(event.getPlayer())){
             Block minedBlock = event.getBlock();
-            Material drop = MiningHelpers.getDropTypeForBlock(minedBlock.getType());
+            Material drop = MaterialsHelpers.getDropTypeForBlock(minedBlock.getType());
             minedBlock.getWorld().dropItemNaturally(minedBlock.getLocation(), new ItemStack(drop));
         }
     }
