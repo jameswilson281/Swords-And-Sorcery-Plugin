@@ -5,7 +5,6 @@
 package me.monstuhs.swordsandsorcery.Managers;
 
 import java.util.ArrayList;
-import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import me.monstuhs.swordsandsorcery.Managers.Models.Spells.Base.Spell;

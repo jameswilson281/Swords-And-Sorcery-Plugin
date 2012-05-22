@@ -40,6 +40,9 @@ public class ConfigurationManager {
         _configFile.addDefault(ConfigConstants.MiningActivities.ACTIVITY_MINING_PpL_DOUBLE_DROP, 1);
         _configFile.addDefault(ConfigConstants.MiningActivities.ACTIVITY_MINING_PpL_INSTABREAK, 1);
         
+        _configFile.addDefault(ConfigConstants.SmithingActivities.ACTIVITY_SMITHING_LEVEL_INTERVAL_TO_DECREASE_COST, 10);
+        _configFile.addDefault(ConfigConstants.SmithingActivities.ACTIVITY_SMITHING_MINIMUM_REQUIRED_MATERIAL, 1);
+        
         _configFile.addDefault(ConfigConstants.CombatActivities.ACTIVITY_COMBAT_PpL_DODGE, 2);
         _configFile.addDefault(ConfigConstants.CombatActivities.ACTIVITY_COMBAT_PpL_CRIT, 2);
         

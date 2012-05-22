@@ -22,6 +22,11 @@ public class ConfigConstants {
         public static final String ACTIVITY_COMBAT_PpL_CRIT = "activity.combat.PercentageChancePerLevelToCrit";        
     }
     
+    public class SmithingActivities {
+        public static final String ACTIVITY_SMITHING_LEVEL_INTERVAL_TO_DECREASE_COST = "activity.smithing.OneLessMaterialPerHowManyLevels";
+        public static final String ACTIVITY_SMITHING_MINIMUM_REQUIRED_MATERIAL = "activity.smithing.MinimumAmountOfMaterialToRepair";
+    }
+    
     public class PassiveActivities {
         public static final String ACTIVITY_PASSIVE_REGEN_HH_PER_LEVEL = "activity.passive.regeneration.HalfheartsPerLevel";
         public static final String ACTIVITY_PASSIVE_REGEN_DELAY = "activity.passive.regeneration.RegenIntervalInSeconds";
