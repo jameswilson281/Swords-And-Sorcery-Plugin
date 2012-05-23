@@ -6,10 +6,7 @@ package me.monstuhs.swordsandsorcery;
 
 import me.monstuhs.swordsandsorcery.Commands.ShowStatsCommand;
 import me.monstuhs.swordsandsorcery.Commands.SpawnCommands;
-import me.monstuhs.swordsandsorcery.EventHandlers.CombatListeners;
-import me.monstuhs.swordsandsorcery.EventHandlers.MiningListeners;
-import me.monstuhs.swordsandsorcery.EventHandlers.SmithingListener;
-import me.monstuhs.swordsandsorcery.EventHandlers.SpellCastListener;
+import me.monstuhs.swordsandsorcery.EventHandlers.*;
 import me.monstuhs.swordsandsorcery.Managers.*;
 import me.monstuhs.swordsandsorcery.Runnables.RegenerationTask;
 import me.monstuhs.swordsandsorcery.Utilities.BukkitHelpers;
@@ -46,7 +43,7 @@ public class SwordsAndSorcery extends JavaPlugin {
         String worldName = _configManager.getConfigFile().getString(ConfigConstants.GlobalSettings.WORLD_NAME);
         _thisWorld = worldName.isEmpty() ? Bukkit.getServer().getWorlds().get(0) : Bukkit.getServer().getWorld(worldName);
 
-
+        _pluginManager.registerEvents(new OrePlacementListener(), this);
         _pluginManager.registerEvents(new MiningListeners(), this);
         _pluginManager.registerEvents(new CombatListeners(), this);
         _pluginManager.registerEvents(new SpellCastListener(_spellManager), this);
