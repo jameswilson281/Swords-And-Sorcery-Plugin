@@ -4,6 +4,7 @@
  */
 package me.monstuhs.swordsandsorcery;
 
+import me.monstuhs.swordsandsorcery.BlockPopulators.OreDistributionPopulator;
 import me.monstuhs.swordsandsorcery.Commands.ShowStatsCommand;
 import me.monstuhs.swordsandsorcery.Commands.SpawnCommands;
 import me.monstuhs.swordsandsorcery.EventHandlers.*;
@@ -42,8 +43,8 @@ public class SwordsAndSorcery extends JavaPlugin {
         
         String worldName = _configManager.getConfigFile().getString(ConfigConstants.GlobalSettings.WORLD_NAME);
         _thisWorld = worldName.isEmpty() ? Bukkit.getServer().getWorlds().get(0) : Bukkit.getServer().getWorld(worldName);
+        _thisWorld.getPopulators().add(new OreDistributionPopulator(_configManager));
 
-        _pluginManager.registerEvents(new OrePlacementListener(), this);
         _pluginManager.registerEvents(new MiningListeners(), this);
         _pluginManager.registerEvents(new CombatListeners(), this);
         _pluginManager.registerEvents(new SpellCastListener(_spellManager), this);
@@ -96,4 +97,6 @@ public class SwordsAndSorcery extends JavaPlugin {
     public SpellManager getSpellManager() {
         return _spellManager;
     }
+    
+    
 }

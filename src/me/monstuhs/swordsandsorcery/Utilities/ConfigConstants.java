@@ -40,6 +40,8 @@ public class ConfigConstants {
         public static final String SETTINGS_COMBAT_HEADSHOT_MODIFIER = "settings.combat.PercentageDamageFromHeadshot";
         public static final String SETTINGS_COMBAT_MAX_CRIT_CHANCE = "settings.combat.MaximumChanceForCrit";
         public static final String SETTINGS_COMBAT_MAX_DODGE_CHANCE = "settings.combat.MaximumChanceForDodge";
+        
+        public static final String SETTINGS_WORLD_ORE_IRON_FREQUENCY_PERCENTAGE = "settings.world.ore.iron.PercentageOfNormalFrequency";
     }
     
     public class Commands {

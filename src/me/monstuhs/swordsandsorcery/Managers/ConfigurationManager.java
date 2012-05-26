@@ -54,6 +54,7 @@ public class ConfigurationManager {
         _configFile.addDefault(ConfigConstants.GlobalSettings.SETTINGS_COMBAT_HEADSHOT_MODIFIER, 200);
         _configFile.addDefault(ConfigConstants.GlobalSettings.SETTINGS_COMBAT_MAX_CRIT_CHANCE, 75);
         _configFile.addDefault(ConfigConstants.GlobalSettings.SETTINGS_COMBAT_MAX_DODGE_CHANCE, 75);
+        _configFile.addDefault(ConfigConstants.GlobalSettings.SETTINGS_WORLD_ORE_IRON_FREQUENCY_PERCENTAGE, 75);
         
         _configFile.addDefault(ConfigConstants.Sorcery.SORCERY_DESTRUCTION_MANA_MATERIAL, Material.REDSTONE_ORE.toString());
         _configFile.addDefault(ConfigConstants.Sorcery.SORCERY_DESTRUCTION_WAND, Material.BLAZE_ROD.toString());
