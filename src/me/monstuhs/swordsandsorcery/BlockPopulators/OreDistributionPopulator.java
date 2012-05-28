@@ -20,10 +20,10 @@ import org.bukkit.generator.BlockPopulator;
  */
 public class OreDistributionPopulator extends BlockPopulator {
 
-    private final ConfigurationManager _configManager;
+    private final int _ironFrequency;
 
     public OreDistributionPopulator(ConfigurationManager configManager) {
-        _configManager = configManager;
+        _ironFrequency = configManager.getConfigFile().getInt(ConfigConstants.GlobalSettings.SETTINGS_WORLD_ORE_IRON_FREQUENCY_PERCENTAGE);
     }
 
     @Override
@@ -32,17 +32,16 @@ public class OreDistributionPopulator extends BlockPopulator {
         for (int chunkY = 10; chunkY < 64; chunkY++) {
             for (int chunkX = 0; chunkX < 16; chunkX++) {
                 for (int chunkZ = 0; chunkZ < 16; chunkZ++) {
-                    Block thisBlock = chunk.getBlock(chunkX, chunkY, chunkZ);
 
-                    if (thisBlock.getType() == Material.IRON_ORE) {
-                        if (random.nextInt(100) < _configManager.getConfigFile().getInt(ConfigConstants.GlobalSettings.SETTINGS_WORLD_ORE_IRON_FREQUENCY_PERCENTAGE)) {
-                            Material newType = thisBlock.getRelative(BlockFace.DOWN).getType();
-                            thisBlock.setType(newType);
-                        }
+                    Block thisBlock = chunk.getBlock(chunkX, chunkY, chunkZ);
+                    
+                    if (thisBlock.getType() == Material.IRON_ORE && random.nextInt(100) < _ironFrequency) {
+                        Material newType = thisBlock.getRelative(BlockFace.DOWN).getType();
+                        thisBlock.setType(newType);
+
                     }
                 }
             }
         }
-
     }
 }

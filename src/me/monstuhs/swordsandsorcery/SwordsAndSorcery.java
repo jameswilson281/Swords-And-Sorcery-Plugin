@@ -64,7 +64,7 @@ public class SwordsAndSorcery extends JavaPlugin {
 
     private void registerCommands() {
         this.getCommand(ConfigConstants.Commands.COMMANDS_SHOW_STATS).setExecutor(new ShowStatsCommand(_playerLvlManager));
-        this.getCommand(ConfigConstants.Commands.COMMANDS_SPAWN_DRAGON).setExecutor(new SpawnCommands());
+        //this.getCommand(ConfigConstants.Commands.COMMANDS_SPAWN_DRAGON).setExecutor(new SpawnCommands());
     }
 
     private void startRegenTicker() {

@@ -42,11 +42,11 @@ public class ConfigConstants {
         public static final String SETTINGS_COMBAT_MAX_DODGE_CHANCE = "settings.combat.MaximumChanceForDodge";
         
         public static final String SETTINGS_WORLD_ORE_IRON_FREQUENCY_PERCENTAGE = "settings.world.ore.iron.PercentageOfNormalFrequency";
-    }
+    }    
     
     public class Commands {
         public static final String COMMANDS_SHOW_STATS = "stats";
-        public static final String COMMANDS_SPAWN_DRAGON = "dragon";
+        //public static final String COMMANDS_SPAWN_DRAGON = "dragon";
     }
     
     public class Sorcery {
