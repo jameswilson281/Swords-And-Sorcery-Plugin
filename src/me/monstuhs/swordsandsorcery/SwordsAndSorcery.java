@@ -56,6 +56,7 @@ public class SwordsAndSorcery extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        Bukkit.getScheduler().cancelAllTasks();
     }
 
     public void saveConfigurationFile() {
